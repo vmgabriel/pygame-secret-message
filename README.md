@@ -1,7 +1,7 @@
 # Universidad Distrital Francisco Josè de Caldas
 ## Facultad Ingenierìa
 
-![alt Escudo-de-Universidad](logo/UD-logo.jpg)
+![alt Escudo-de-Universidad](logo/UD-logo.gif)
 
 ### Proyecto enfocado en obtener el grupo de trabajo PYGAME
 
