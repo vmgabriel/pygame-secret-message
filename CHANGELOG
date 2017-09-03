@@ -1,0 +1,12 @@
+
+# Changelog
+	All notable changes to this project will be documented in this file.
+
+	## 0.0.1 - 2-9-2017
+	### Added
+	- Todas las carpetas basicas M-V-C por vmgabriel
+	- CHANGELOG, GITIGNORE, LICENCE entre otras
+	- LICENCENCIA = GPL para mantener proteccion libre del software y darle
+	la debida compensacion a los autores
+	- agregado main.py
+	- Organizando las funcionalidades
