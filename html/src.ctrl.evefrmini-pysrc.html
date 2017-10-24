@@ -77,27 +77,41 @@
 </div><div id="eveFrmIni-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="eveFrmIni-expanded"><a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">    <tt class="py-docstring">"""Clase enfocada en la inspeccion de los eventos del sistema del formulario, juego"""</tt> </tt>
 <a name="eveFrmIni.__init__"></a><div id="eveFrmIni.__init__-def"><a name="L19"></a><tt class="py-lineno">19</tt> <a class="py-toggle" href="#" id="eveFrmIni.__init__-toggle" onclick="return toggle('eveFrmIni.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="src.ctrl.evefrmini.eveFrmIni-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
 </div><div id="eveFrmIni.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="eveFrmIni.__init__-expanded"><a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">        <tt class="py-docstring">"""Constructor la clase manejadora de los eventos"""</tt> </tt>
-<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">inicializador</tt><tt class="py-op">=</tt><tt class="py-number">0</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">is_running</tt> <tt class="py-op">=</tt> <tt class="py-name">False</tt> </tt>
 <a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">        <tt class="py-string">"""Variable cargadora de algunos procesos"""</tt> </tt>
 </div><a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"> </tt>
 <a name="eveFrmIni.salir"></a><div id="eveFrmIni.salir-def"><a name="L24"></a><tt class="py-lineno">24</tt> <a class="py-toggle" href="#" id="eveFrmIni.salir-toggle" onclick="return toggle('eveFrmIni.salir');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="src.ctrl.evefrmini.eveFrmIni-class.html#salir">salir</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
 </div><div id="eveFrmIni.salir-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="eveFrmIni.salir-expanded"><a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">        <tt class="py-docstring">"""Metodo de salida del proceso"""</tt> </tt>
 <a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">        <tt class="py-name">sys</tt><tt class="py-op">.</tt><tt class="py-name">exit</tt><tt class="py-op">(</tt><tt class="py-number">0</tt><tt class="py-op">)</tt> </tt>
 </div><a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"> </tt>
-<a name="eveFrmIni.evePrincipal"></a><div id="eveFrmIni.evePrincipal-def"><a name="L28"></a><tt class="py-lineno">28</tt> <a class="py-toggle" href="#" id="eveFrmIni.evePrincipal-toggle" onclick="return toggle('eveFrmIni.evePrincipal');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="src.ctrl.evefrmini.eveFrmIni-class.html#evePrincipal">evePrincipal</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt><tt class="py-param">evento</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
-</div><div id="eveFrmIni.evePrincipal-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="eveFrmIni.evePrincipal-expanded"><a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
-<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-docstring">        Metodo que gestionara todos los procesos del juego</tt> </tt>
-<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"><tt class="py-docstring">        @param evento: Eventos que suceden en el momento</tt> </tt>
-<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-docstring">        @type evento: Event</tt> </tt>
-<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
-<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">evento</tt><tt class="py-op">.</tt><tt class="py-name">type</tt> <tt class="py-op">==</tt> <tt id="link-0" class="py-name" targets="Variable src.ctrl.QUIT=src.ctrl-module.html#QUIT,Variable src.ctrl.evefrmini.QUIT=src.ctrl.evefrmini-module.html#QUIT,Variable src.model.QUIT=src.model-module.html#QUIT,Variable src.view.QUIT=src.view-module.html#QUIT,Variable src.view.frmini.QUIT=src.view.frmini-module.html#QUIT"><a title="src.ctrl.QUIT
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">    <tt class="py-comment"># def getEventosPersonalizados(self,ev1,ev2):</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">    <tt class="py-comment">#     """</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">    <tt class="py-comment">#     Recibira los eventos personalizados para poder ser personalizados</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">    <tt class="py-comment">#     @type ev1: Evento personalizado 1 entrada de imagen inicializada en la vista</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">    <tt class="py-comment">#     @type ev2: Evento personalizado 2 salida de imagen inicializada en la vista</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">    <tt class="py-comment">#     """</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">    <tt class="py-comment">#     self.ev1=ev1</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">    <tt class="py-comment">#     self.ev2=ev2</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"> </tt>
+<a name="eveFrmIni.evePrincipal"></a><div id="eveFrmIni.evePrincipal-def"><a name="L38"></a><tt class="py-lineno">38</tt> <a class="py-toggle" href="#" id="eveFrmIni.evePrincipal-toggle" onclick="return toggle('eveFrmIni.evePrincipal');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="src.ctrl.evefrmini.eveFrmIni-class.html#evePrincipal">evePrincipal</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt><tt class="py-param">evento</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="eveFrmIni.evePrincipal-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="eveFrmIni.evePrincipal-expanded"><a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"><tt class="py-docstring">        Metodo que gestionara todos los procesos del juego</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line"><tt class="py-docstring">        @param evento: Eventos que suceden en el momento</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line"><tt class="py-docstring">        @type evento: Event</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">is_running</tt><tt class="py-op">=</tt><tt class="py-name">True</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">evento</tt><tt class="py-op">.</tt><tt class="py-name">type</tt> <tt class="py-op">==</tt> <tt id="link-0" class="py-name" targets="Variable src.ctrl.QUIT=src.ctrl-module.html#QUIT,Variable src.ctrl.evefrmini.QUIT=src.ctrl.evefrmini-module.html#QUIT,Variable src.model.QUIT=src.model-module.html#QUIT,Variable src.view.QUIT=src.view-module.html#QUIT,Variable src.view.boton.QUIT=src.view.boton-module.html#QUIT,Variable src.view.frmini.QUIT=src.view.frmini-module.html#QUIT,Variable src.view.imagenes.QUIT=src.view.imagenes-module.html#QUIT,Variable src.view.titulo.QUIT=src.view.titulo-module.html#QUIT"><a title="src.ctrl.QUIT
 src.ctrl.evefrmini.QUIT
 src.model.QUIT
 src.view.QUIT
-src.view.frmini.QUIT" class="py-name" href="#" onclick="return doclink('link-0', 'QUIT', 'link-0');">QUIT</a></tt><tt class="py-op">:</tt> </tt>
-<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Method src.ctrl.evefrmini.eveFrmIni.salir()=src.ctrl.evefrmini.eveFrmIni-class.html#salir"><a title="src.ctrl.evefrmini.eveFrmIni.salir" class="py-name" href="#" onclick="return doclink('link-1', 'salir', 'link-1');">salir</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
-</div></div><a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+src.view.boton.QUIT
+src.view.frmini.QUIT
+src.view.imagenes.QUIT
+src.view.titulo.QUIT" class="py-name" href="#" onclick="return doclink('link-0', 'QUIT', 'link-0');">QUIT</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Method src.ctrl.evefrmini.eveFrmIni.salir()=src.ctrl.evefrmini.eveFrmIni-class.html#salir"><a title="src.ctrl.evefrmini.eveFrmIni.salir" class="py-name" href="#" onclick="return doclink('link-1', 'salir', 'link-1');">salir</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"> </tt><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -130,7 +144,7 @@ expandto(location.href);
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sun Oct  8 11:53:45 2017
+    Generated by Epydoc 3.0.1 on Mon Oct 23 23:12:24 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

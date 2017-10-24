@@ -28,7 +28,7 @@ class eveFrmIni:
     # def getEventosPersonalizados(self,ev1,ev2):
     #     """
     #     Recibira los eventos personalizados para poder ser personalizados
-    # 
+    #
     #     @type ev1: Evento personalizado 1 entrada de imagen inicializada en la vista
     #     @type ev2: Evento personalizado 2 salida de imagen inicializada en la vista
     #     """
