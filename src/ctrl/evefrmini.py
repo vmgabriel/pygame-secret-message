@@ -23,6 +23,8 @@ class eveFrmIni:
         """Constructor la clase manejadora de los eventos"""
         self.is_running = False
         """Variable cargadora de algunos procesos"""
+        self.eventoEjecutado = 0
+        """Evento que puede enviarse a el formulario para saber en que estado esta"""
 
     def salir(self):
         """Metodo de salida del proceso"""
@@ -39,7 +41,60 @@ class eveFrmIni:
     #     self.ev2=ev2
 
     def enviarEventoBoton(self, boton):
+        """
+        Metodo que recibe los botones para revisar sus eventos
+
+        @param boton: Boton a revisar evento
+        @type boton: Boton
+        """
         self.botones.append(boton)
+
+    def getEventoEjecutado(self):
+        """
+        Retorna el evento que ejecuto algun boton
+
+        @return: eventoejecutado
+        @rtype: int
+        """
+        return self.eventoEjecutado
+
+    def desactivarBotonesMenuPrincipal(self):
+        """
+        Desactiva los botones del menu principal
+        """
+        #Los botones van de 0 a 3
+        a = 0
+        for x in self.botones:
+            if a < 4:
+                x.modificarActivo(False)
+                a = a + 1
+
+    def activarBotonesMenuPrincipal(self):
+        """
+        Activa los botones del menu principal
+        """
+        #Los botones van de 0 a 3
+        a = 0
+        for x in self.botones:
+            if a < 4:
+                x.modificarActivo(True)
+                a = a + 1
+
+    def desactivarBotonesMenuSalida(self):
+        """
+        Desactiva los botones del menu de Salida
+        """
+        #Los Botones son 4 y 5
+        self.botones[4].modificarActivo(False)
+        self.botones[5].modificarActivo(False)
+
+    def activarBotonesMenuSalida(self):
+        """
+        Activa los botones del menu de Salida
+        """
+        #Los Botones son 4 y 5
+        self.botones[4].modificarActivo(True)
+        self.botones[5].modificarActivo(True)
 
     def evePrincipal(self,evento):
         """
@@ -55,17 +110,24 @@ class eveFrmIni:
             for x in self.botones:
                 if (x.estaEncima(evento.pos[0], evento.pos[1])):
                     if (x.geteventoActivo() == 1):
-                        print("Evento Activo 1")
+                        self.eventoEjecutado = 2
                     if (x.geteventoActivo() == 2):
-                        print("Evento Activo 2")
+                        self.eventoEjecutado = 3
                     if (x.geteventoActivo() == 3):
-                        print("Evento Activo 3")
+                        self.eventoEjecutado = 4
                     if (x.geteventoActivo() == 4):
-                        print("Evento Activo 4")
+                        self.eventoEjecutado = 5
+                    if (x.geteventoActivo() == 5):
+                        self.salir()
+                    if (x.geteventoActivo() == 6):
+                        self.eventoEjecutado = 1
         if evento.type == pygame.MOUSEBUTTONUP:
             for x in self.botones:
                 if (x.estaEncima(evento.pos[0], evento.pos[1])):
                     x.modificarEstadoBoton(2)
+            if (self.eventoEjecutado == 1):
+                self.activarBotonesMenuPrincipal()
+                self.desactivarBotonesMenuSalida()
         if evento.type == pygame.MOUSEMOTION:
             for x in self.botones:
                 if (x.estaEncima(evento.pos[0], evento.pos[1])):

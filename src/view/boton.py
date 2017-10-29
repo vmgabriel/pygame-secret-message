@@ -40,6 +40,7 @@ class Boton(object):
         self.texto = Titulo(self.string, self.postextoX, self.postextoY, 15, 2,
             self.colorletra1)
         self.eventoActivo = 1
+        self.activo = True
 
     def pintar(self,tamVentana):
         """
@@ -48,14 +49,15 @@ class Boton(object):
         @param tamVentana: Tamano de la ventana
         @type tamVentana: Surface
         """
-        self.actualizarBoton()
-        if (self.estadoBoton == 1):
-            pygame.draw.rect(tamVentana, self.color1, self.rectt, self.width)
-        elif (self.estadoBoton == 2):
-            pygame.draw.rect(tamVentana, self.color2, self.rectt, self.width)
-        elif (self.estadoBoton == 3):
-            pygame.draw.rect(tamVentana, self.color3, self.rectt, self.width)
-        self.texto.pintar(tamVentana)
+        if self.activo:
+            self.actualizarBoton()
+            if (self.estadoBoton == 1):
+                pygame.draw.rect(tamVentana, self.color1, self.rectt, self.width)
+            elif (self.estadoBoton == 2):
+                pygame.draw.rect(tamVentana, self.color2, self.rectt, self.width)
+            elif (self.estadoBoton == 3):
+                pygame.draw.rect(tamVentana, self.color3, self.rectt, self.width)
+            self.texto.pintar(tamVentana)
 
     def actualizarBoton(self):
         """Actualiza el boton con alguno de los componentes cambiados"""
@@ -81,9 +83,11 @@ class Boton(object):
         @return: Valor True o False diciendo si esta encima
         @rtype: bool
         """
-        return ((self.rectt[0] <= posX and self.rectt[1] <= posY) and
-            ((self.rectt[0] + self.rectt[2]) >= posX) and
-            ((self.rectt[1] + self.rectt[3]) >= posY))
+        if self.activo:
+            return ((self.rectt[0] <= posX and self.rectt[1] <= posY) and
+                ((self.rectt[0] + self.rectt[2]) >= posX) and
+                ((self.rectt[1] + self.rectt[3]) >= posY))
+        return False
 
     def modificarString(self, string):
         """
@@ -233,6 +237,27 @@ class Boton(object):
         """
         self.eventoActivo = evento
 
+    def modificarActivo(self, activo):
+        """
+        Da la posibilidad de inhabilitar el boton en cuestion, ademas de su evento
+
+        @param activo: situacion actual del boton
+        @type activo: boolean
+        """
+        self.activo = activo
+
+    def modificarPosicionTexto(self, posX, posY):
+        """
+        Modifica la posicion en la que el texto va a aparecer para el boton
+
+        @param posX: Posicion por X
+        @param posY: Posicion por Y
+        @type posX: int
+        @type posY: int
+        """
+        self.postextoX = self.rectt[0] + posX
+        self.postextoY = self.rectt[1] + posY
+
     def getColor1(self):
         """
         Retorna el valor del color (R, G, B)
@@ -307,3 +332,12 @@ class Boton(object):
         @rtype: int
         """
         return self.eventoActivo
+
+    def getActivo(self):
+        """
+        Retorna si el evento esta activo o no
+
+        @return: Boton Activo?
+        @rtype: boolean
+        """
+        return self.activo

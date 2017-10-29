@@ -107,6 +107,73 @@ class frmIni:
         self.subtitulopresentacion = Titulo("Diversion Oculta!", 320, 250,
             30, 4, (230, 233, 48))
 
+    def menuSalida(self):
+        """
+        Cargara el menu de salida
+        """
+        self.fondo_menu = Imagen("view/img/fondos/Egipto.jpg", (0, 0))
+        self.titulomenu = Titulo("KACH!", 150, 380, 70, 2, (36, 32, 163))
+        self.mensaje_salida = Titulo("Desea Salir ?", 350, 200, 40, 4, (36, 32, 163))
+
+        self.btnSi = Boton("Si")
+        self.btnSi.modificarPosicion(280, 420)
+        self.btnSi.modificarTamano(160,50)
+        self.btnSi.modificarPosicionTexto(30, 27)
+        self.btnSi.modificarColor1(234, 234, 216)
+        self.btnSi.modificarColorLetra1(21, 67, 96)
+        self.btnSi.modificarColor2(209, 210, 179)
+        self.btnSi.modificarColorLetra2(21, 67, 96)
+        self.btnSi.modificarColor3(91, 202, 213)
+        self.btnSi.modificarColorLetra3(21, 67, 96)
+        self.btnSi.modificarEvento(5)
+        self.btnNo = Boton("No")
+        self.btnNo.modificarPosicion(460, 420)
+        self.btnNo.modificarTamano(160,50)
+        self.btnNo.modificarPosicionTexto(30, 27)
+        self.btnNo.modificarColor1(234, 234, 216)
+        self.btnNo.modificarColorLetra1(21, 67, 96)
+        self.btnNo.modificarColor2(209, 210, 179)
+        self.btnNo.modificarColorLetra2(21, 67, 96)
+        self.btnNo.modificarColor3(91, 202, 213)
+        self.btnNo.modificarColorLetra3(21, 67, 96)
+        self.btnNo.modificarEvento(6)
+
+        #Eventos de los botones
+        self.controlador.enviarEventoBoton(self.btnSi)
+        self.controlador.enviarEventoBoton(self.btnNo)
+
+    def desactivarBotonesMenuPrincipal(self):
+        """
+        Desactiva los botones del menu principal
+        """
+        self.btnEncriptar.modificarActivo(False)
+        self.btnTutorial.modificarActivo(False)
+        self.btnPuntaje.modificarActivo(False)
+        self.btnSalir.modificarActivo(False)
+
+    def activarBotonesMenuPrincipal(self):
+        """
+        Activa los botones del menu principal
+        """
+        self.btnEncriptar.modificarActivo(True)
+        self.btnTutorial.modificarActivo(True)
+        self.btnPuntaje.modificarActivo(True)
+        self.btnSalir.modificarActivo(True)
+
+    def desactivarBotonesMenuSalida(self):
+        """
+        Desactiva los botones del menu de Salida
+        """
+        self.btnSi.modificarActivo(False)
+        self.btnNo.modificarActivo(False)
+
+    def activarBotonesMenuSalida(self):
+        """
+        Activa los botones del menu de Salida
+        """
+        self.btnSi.modificarActivo(True)
+        self.btnNo.modificarActivo(True)
+
     def run(self):
         """
         El metodo run cargara la ventana, ademas tendra el ciclo principal para el juego en general
@@ -120,6 +187,7 @@ class frmIni:
         pygame.display.set_caption(self.titulo)
         self.cargaCreditosInicio()
         self.menu()
+        self.menuSalida()
 
         #While principal, es el enfocado de correr los procesos del juego
         while True:
@@ -152,6 +220,10 @@ class frmIni:
                 self.screen.fill(self.color_fondo)
                 self.etapa = 1
             if self.etapa == 1:
+                #Activar los botones si estan desactivados
+                self.activarBotonesMenuPrincipal()
+                self.desactivarBotonesMenuSalida()
+
                 #En el menu
                 self.fondo_menu.ponerImagen(self.screen)
                 self.titulomenu.pintar(self.screen)
@@ -160,9 +232,30 @@ class frmIni:
                 self.btnTutorial.pintar(self.screen)
                 self.btnPuntaje.pintar(self.screen)
                 self.btnSalir.pintar(self.screen)
+                if not self.controlador.getEventoEjecutado() == 0:
+                    self.etapa = self.controlador.getEventoEjecutado()
             if self.etapa == 2:
-                #En el juego
+                #Tutorial
                 pass
+            if self.etapa == 3:
+                #juego
+                pass
+            if self.etapa == 4:
+                #Puntuacion
+                pass
+            if self.etapa == 5:
+                #Salir
+                self.activarBotonesMenuSalida()
+                self.desactivarBotonesMenuPrincipal()
+
+                self.fondo_menu.ponerImagen(self.screen)
+                self.titulomenu.pintar(self.screen)
+                self.mensaje_salida.pintar(self.screen)
+
+                self.btnSi.pintar(self.screen)
+                self.btnNo.pintar(self.screen)
+
+                self.etapa = self.controlador.getEventoEjecutado()
 
             pygame.display.flip()
                 #Se envian los evento para que el los procese
