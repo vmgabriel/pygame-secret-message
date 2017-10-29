@@ -47,16 +47,50 @@ class frmIni:
         Seccion del menu para el video juego
         """
         self.fondo_menu = Imagen("view/img/fondos/Egipto.jpg", (0, 0))
-        self.titulomenu = Titulo("KACH!", 100, 50)
+        self.titulomenu = Titulo("KACH!", 150, 380, 70, 2, (36, 32, 163))
         #Todos los botones con sus respectivas posiciones
-        self.btnEncriptar = Boton("Jugar")
-        self.btnEncriptar.modificarPosicion(400, 140)
         self.btnTutorial = Boton("Tutorial")
-        self.btnTutorial.modificarPosicion(400, 220)
+        self.btnTutorial.modificarPosicion(400, 140)
+        self.btnTutorial.modificarColor1(234, 234, 216)
+        self.btnTutorial.modificarColorLetra1(21, 67, 96)
+        self.btnTutorial.modificarColor2(209, 210, 179)
+        self.btnTutorial.modificarColorLetra2(21, 67, 96)
+        self.btnTutorial.modificarColor3(91, 202, 213)
+        self.btnTutorial.modificarColorLetra3(21, 67, 96)
+        self.btnTutorial.modificarEvento(1)
+        self.btnEncriptar = Boton("Jugar")
+        self.btnEncriptar.modificarPosicion(400, 220)
+        self.btnEncriptar.modificarColor1(234, 234, 216)
+        self.btnEncriptar.modificarColorLetra1(21, 67, 96)
+        self.btnEncriptar.modificarColor2(209, 210, 179)
+        self.btnEncriptar.modificarColorLetra2(21, 67, 96)
+        self.btnEncriptar.modificarColor3(91, 202, 213)
+        self.btnEncriptar.modificarColorLetra3(21, 67, 96)
+        self.btnEncriptar.modificarEvento(2)
         self.btnPuntaje = Boton("Puntajes")
         self.btnPuntaje.modificarPosicion(400, 300)
+        self.btnPuntaje.modificarColor1(234, 234, 216)
+        self.btnPuntaje.modificarColorLetra1(21, 67, 96)
+        self.btnPuntaje.modificarColor2(209, 210, 179)
+        self.btnPuntaje.modificarColorLetra2(21, 67, 96)
+        self.btnPuntaje.modificarColor3(91, 202, 213)
+        self.btnPuntaje.modificarColorLetra3(21, 67, 96)
+        self.btnPuntaje.modificarEvento(3)
         self.btnSalir = Boton("Salir")
         self.btnSalir.modificarPosicion(400, 380)
+        self.btnSalir.modificarColor1(234, 234, 216)
+        self.btnSalir.modificarColorLetra1(21, 67, 96)
+        self.btnSalir.modificarColor2(209, 210, 179)
+        self.btnSalir.modificarColorLetra2(21, 67, 96)
+        self.btnSalir.modificarColor3(91, 202, 213)
+        self.btnSalir.modificarColorLetra3(21, 67, 96)
+        self.btnSalir.modificarEvento(4)
+
+        #Enviando eventos de los botones
+        self.controlador.enviarEventoBoton(self.btnEncriptar)
+        self.controlador.enviarEventoBoton(self.btnTutorial)
+        self.controlador.enviarEventoBoton(self.btnPuntaje)
+        self.controlador.enviarEventoBoton(self.btnSalir)
 
 
     def cargaCreditosInicio(self):
@@ -67,9 +101,11 @@ class frmIni:
         self.Logo2 = Imagen("view/img/python-logo.png", (210, 130), True)
         self.Logo3 = Imagen("view/img/pygame-logo.jpg", (120, 100))
 
-        self.titulopresentacion = Titulo("KACH!", 320, 180, 40, 1, (255, 195, 0))
+        self.imagen_fondo_presentacion = Imagen("view/img/fondos/Egipto-night.jpg",
+            (0, 0))
+        self.titulopresentacion = Titulo("KACH!", 320, 180, 60, 1, (255, 255, 255))
         self.subtitulopresentacion = Titulo("Diversion Oculta!", 320, 250,
-            30, 2, (255, 195, 0))
+            30, 4, (230, 233, 48))
 
     def run(self):
         """
@@ -107,7 +143,7 @@ class frmIni:
                 pygame.display.flip()
                 pygame.time.wait(3000)
 
-                self.screen.fill((0, 12, 192))
+                self.imagen_fondo_presentacion.ponerImagen(self.screen)
                 self.titulopresentacion.pintar(self.screen)
                 self.subtitulopresentacion.pintar(self.screen)
                 pygame.display.flip()

@@ -21,6 +21,9 @@ class Titulo(object):
     tipografia2 = "view/tipografias/gunplay-rg.ttf"
     """tipografia2 que se va a usar"""
     tipografia3 = "view/tipografias/neuropol.ttf"
+    """tipografia3 que se va a usar"""
+    tipografia4 = "view/tipografias/pythia.ttf"
+    """tipografia4 que se va a usar"""
 
     def __init__(self, texto, posx, posy, tam = 40, tipografia = 1,
         color=(255, 255, 255)):
@@ -44,8 +47,10 @@ class Titulo(object):
             self.fuente = pygame.font.Font(self.tipografia1, tam)
         elif (tipografia == 2):
             self.fuente = pygame.font.Font(self.tipografia2, tam)
-        else:
+        elif (tipografia == 3):
             self.fuente = pygame.font.Font(self.tipografia3, tam)
+        else:
+            self.fuente = pygame.font.Font(self.tipografia4, tam)
         self.salida = pygame.font.Font.render(self.fuente, texto, 1, color)
         self.salida_rect = self.salida.get_rect()
         self.salida_rect.centerx = posx
