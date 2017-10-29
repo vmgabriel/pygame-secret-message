@@ -96,6 +96,18 @@ class eveFrmIni:
         self.botones[4].modificarActivo(True)
         self.botones[5].modificarActivo(True)
 
+    def desactivarBotonesPuntuacion(self):
+        """
+        Desactiva los botones de la puntuacion
+        """
+        self.botones[6].modificarActivo(False)
+
+    def activarBotonesPuntuacion(self):
+        """
+        Activa los botones de la puntuacion
+        """
+        self.botones[6].modificarActivo(True)
+
     def evePrincipal(self,evento):
         """
         Metodo que gestionara todos los procesos del juego
@@ -128,6 +140,7 @@ class eveFrmIni:
             if (self.eventoEjecutado == 1):
                 self.activarBotonesMenuPrincipal()
                 self.desactivarBotonesMenuSalida()
+                self.desactivarBotonesPuntuacion()
         if evento.type == pygame.MOUSEMOTION:
             for x in self.botones:
                 if (x.estaEncima(evento.pos[0], evento.pos[1])):
