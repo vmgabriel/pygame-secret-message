@@ -21,7 +21,7 @@ class Imagen(object):
     posicion = (0, 0)
     """Guardara la posicion de la imagen donde va a aparecer en la pantalla"""
 
-    def __init__(self, direccion = "", posicion = (0,0), transparencia = False):
+    def __init__(self, direccion = "", posicion = (0,0),transparencia = False):
         """
         Enfocado en guardar las propiedades iniciales de la imagen
 
@@ -65,3 +65,14 @@ class Imagen(object):
         @type screen: Surface
         """
         screen.blit(self.imagen_cargada, self.posicion)
+
+    def cambiarEscala(self, escala):
+        """
+        Cambia la escala de la imagen para hacerla o mas grande o mas pequeña
+
+        @param escala: Numero que se va a multiplicar de la imagen
+        @type escala: double
+        """
+        w,h = self.imagen_cargada.get_size()
+        self.imagen_cargada = pygame.transform.scale(self.imagen_cargada,
+            (int(w*escala), int(h*escala) ))

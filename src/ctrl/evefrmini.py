@@ -108,6 +108,24 @@ class eveFrmIni:
         """
         self.botones[6].modificarActivo(True)
 
+    def activarBotonesTutorial(self):
+        """Activa el conjunto de botones"""
+        self.botones[7].modificarActivo(True)
+        self.botones[8].modificarActivo(True)
+        self.botones[9].modificarActivo(True)
+        self.botones[10].modificarActivo(True)
+        self.botones[11].modificarActivo(True)
+        self.botones[12].modificarActivo(True)
+
+    def desactivarBotonesTutorial(self):
+        """Desactiva el conjunto de botones"""
+        self.botones[7].modificarActivo(False)
+        self.botones[8].modificarActivo(False)
+        self.botones[9].modificarActivo(False)
+        self.botones[10].modificarActivo(False)
+        self.botones[11].modificarActivo(False)
+        self.botones[12].modificarActivo(False)
+
     def evePrincipal(self,evento):
         """
         Metodo que gestionara todos los procesos del juego
@@ -133,6 +151,13 @@ class eveFrmIni:
                         self.salir()
                     if (x.geteventoActivo() == 6):
                         self.eventoEjecutado = 1
+                    if (x.geteventoActivo() == 7):
+                        if (self.eventoEjecutado < 8):
+                            self.eventoEjecutado = 8
+                        elif (self.eventoEjecutado >= 8):
+                            self.eventoEjecutado += 1
+                        if (self.eventoEjecutado == 16):
+                            self.eventoEjecutado = 1
         if evento.type == pygame.MOUSEBUTTONUP:
             for x in self.botones:
                 if (x.estaEncima(evento.pos[0], evento.pos[1])):
@@ -141,6 +166,7 @@ class eveFrmIni:
                 self.activarBotonesMenuPrincipal()
                 self.desactivarBotonesMenuSalida()
                 self.desactivarBotonesPuntuacion()
+                self.desactivarBotonesTutorial()
         if evento.type == pygame.MOUSEMOTION:
             for x in self.botones:
                 if (x.estaEncima(evento.pos[0], evento.pos[1])):

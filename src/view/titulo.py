@@ -43,18 +43,31 @@ class Titulo(object):
         @param color: Color que se le va a dar al texto
         @type color: Color RSA
         """
-        if (tipografia == 1):
-            self.fuente = pygame.font.Font(self.tipografia1, tam)
-        elif (tipografia == 2):
-            self.fuente = pygame.font.Font(self.tipografia2, tam)
-        elif (tipografia == 3):
-            self.fuente = pygame.font.Font(self.tipografia3, tam)
+        self.tam = tam
+        self.texto = texto
+        self.color = color
+        self.posicionX = posx
+        self.posicionY = posy
+        self.tipografia = tipografia
+
+        self.cargar()
+
+    def cargar(self):
+        """
+        Carga los componentes para el titulo(texto)
+        """
+        if (self.tipografia == 1):
+            self.fuente = pygame.font.Font(self.tipografia1, self.tam)
+        elif (self.tipografia == 2):
+            self.fuente = pygame.font.Font(self.tipografia2, self.tam)
+        elif (self.tipografia == 3):
+            self.fuente = pygame.font.Font(self.tipografia3, self.tam)
         else:
-            self.fuente = pygame.font.Font(self.tipografia4, tam)
-        self.salida = pygame.font.Font.render(self.fuente, texto, 1, color)
+            self.fuente = pygame.font.Font(self.tipografia4, self.tam)
+        self.salida = pygame.font.Font.render(self.fuente, self.texto, 1, self.color)
         self.salida_rect = self.salida.get_rect()
-        self.salida_rect.centerx = posx
-        self.salida_rect.centery = posy
+        self.salida_rect.centerx = self.posicionX
+        self.salida_rect.centery = self.posicionY
 
     def pintar(self, screen):
         """
@@ -64,3 +77,13 @@ class Titulo(object):
         @type screen: Surface
         """
         screen.blit(self.salida, self.salida_rect)
+
+    def modificarTexto(self, texto):
+        """
+        Modifica el texto del titulo
+
+        @param texto: Texto a modificar
+        @type texto: str
+        """
+        self.texto = texto
+        self.cargar()

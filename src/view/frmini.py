@@ -9,6 +9,7 @@ from pygame.locals import *
 from boton import Boton
 from imagenes import Imagen
 from titulo import Titulo
+from tutorial import Tutorial
 
 """
 Formulario que cargara, primera ventana
@@ -47,6 +48,7 @@ class frmIni:
         Seccion del menu para el video juego
         """
         self.fondo_menu = Imagen("view/img/fondos/Egipto.jpg", (0, 0))
+        self.fondo_menu.cambiarEscala(0.4)
         self.titulomenu = Titulo("KACH!", 150, 380, 70, 2, (36, 32, 163))
         #Todos los botones con sus respectivas posiciones
         self.btnTutorial = Boton("Tutorial")
@@ -103,6 +105,7 @@ class frmIni:
 
         self.imagen_fondo_presentacion = Imagen("view/img/fondos/Egipto-night.jpg",
             (0, 0))
+        self.imagen_fondo_presentacion.cambiarEscala(0.4)
         self.titulopresentacion = Titulo("KACH!", 320, 180, 60, 1, (255, 255, 255))
         self.subtitulopresentacion = Titulo("Diversion Oculta!", 320, 250,
             30, 4, (230, 233, 48))
@@ -112,6 +115,7 @@ class frmIni:
         Cargara el menu de salida
         """
         self.fondo_menu = Imagen("view/img/fondos/Egipto.jpg", (0, 0))
+        self.fondo_menu.cambiarEscala(0.4)
         self.titulomenu = Titulo("KACH!", 150, 380, 70, 2, (36, 32, 163))
         self.mensaje_salida = Titulo("Desea Salir ?", 350, 200, 40, 4, (36, 32, 163))
 
@@ -147,6 +151,7 @@ class frmIni:
         Mostrara en general la puntuacion
         """
         self.fondo_puntuacion = Imagen("view/img/fondos/PaisesBajos.jpg", (0, 0))
+        self.fondo_puntuacion.cambiarEscala(0.7)
         self.lblPuntuacion = Titulo("Puntuacion", 450, 30, 40, 2, (36, 32, 163))
         self.titulomenu = Titulo("KACH!", 120, 450, 70, 2, (36, 32, 163))
 
@@ -579,6 +584,7 @@ class frmIni:
         self.menu()
         self.menuSalida()
         self.vistaPuntuacion()
+        tutorial = Tutorial(self.controlador)
 
         #While principal, es el enfocado de correr los procesos del juego
         while True:
@@ -615,6 +621,7 @@ class frmIni:
                 self.activarBotonesMenuPrincipal()
                 self.desactivarBotonesMenuSalida()
                 self.desactivarBotonesPuntuacion()
+                tutorial.desactivarBotones()
 
                 #En el menu
                 self.fondo_menu.ponerImagen(self.screen)
@@ -626,9 +633,21 @@ class frmIni:
                 self.btnSalir.pintar(self.screen)
                 if not self.controlador.getEventoEjecutado() == 0:
                     self.etapa = self.controlador.getEventoEjecutado()
-            if self.etapa == 2:
+            if (self.etapa == 2 or self.etapa == 8 or self.etapa == 9 or self.etapa == 10
+                or self.etapa == 11 or self.etapa == 12 or self.etapa == 13
+                or self.etapa == 14 or self.etapa == 15):
                 #Tutorial
-                pass
+                self.desactivarBotonesMenuPrincipal()
+                self.desactivarBotonesMenuSalida()
+                self.desactivarBotonesPuntuacion()
+                tutorial.activarBotones()
+
+                if (self.etapa == 2):
+                    tutorial.pintar(self.screen)
+                else:
+                    tutorial.pintar(self.screen, self.etapa-7)
+
+                self.etapa = self.controlador.getEventoEjecutado()
             if self.etapa == 3:
                 #juego
                 pass
@@ -637,6 +656,7 @@ class frmIni:
                 self.activarBotonesPuntuacion()
                 self.desactivarBotonesMenuPrincipal()
                 self.desactivarBotonesMenuSalida()
+                tutorial.desactivarBotones()
 
                 self.fondo_puntuacion.ponerImagen(self.screen)
                 self.titulomenu.pintar(self.screen)
@@ -691,6 +711,7 @@ class frmIni:
                 self.activarBotonesMenuSalida()
                 self.desactivarBotonesMenuPrincipal()
                 self.desactivarBotonesPuntuacion()
+                tutorial.desactivarBotones()
 
                 self.fondo_menu.ponerImagen(self.screen)
                 self.titulomenu.pintar(self.screen)
