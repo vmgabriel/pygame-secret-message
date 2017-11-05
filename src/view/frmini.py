@@ -10,6 +10,7 @@ from boton import Boton
 from imagenes import Imagen
 from titulo import Titulo
 from tutorial import Tutorial
+from juego import Juego
 
 """
 Formulario que cargara, primera ventana
@@ -585,6 +586,7 @@ class frmIni:
         self.menuSalida()
         self.vistaPuntuacion()
         tutorial = Tutorial(self.controlador)
+        juego = Juego(self.controlador)
 
         #While principal, es el enfocado de correr los procesos del juego
         while True:
@@ -650,7 +652,7 @@ class frmIni:
                 self.etapa = self.controlador.getEventoEjecutado()
             if self.etapa == 3:
                 #juego
-                pass
+                juego.pintar(self.screen)
             if self.etapa == 4:
                 #Puntuacion
                 self.activarBotonesPuntuacion()

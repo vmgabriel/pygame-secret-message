@@ -24,6 +24,178 @@ class Juego(object):
     def __init__(self, ctrl):
         self.controlador = ctrl
 
+        self.fondo = "view/img/fondos/Espera-espectral.jpg"
+
+        self.construir()
+
+        self.vida_actuales = 3
+
+    def construir(self):
+        """
+        Metodo que va a generar la construccion grafica del juego
+        """
+        self.fondo = Imagen(self.fondo, (0, 0))
+        self.fondo.cambiarEscala(0.5)
+        self.titulo = Titulo("KACH!", 120, 450, 70, 2, (36, 32, 163))
+        self.lblNivel = Titulo("Nivel 1", 550, 30, 40, 2, (36, 32, 163))
+
+        self.cuadro = Boton("")
+        self.cuadro.modificarPosicion(10, 50)
+        self.cuadro.modificarTamano(620,200)
+        self.cuadro.modificarPosicionTexto(30, 27)
+        self.cuadro.modificarColor1(234, 234, 216)
+        self.cuadro.modificarColorLetra1(21, 67, 96)
+        self.cuadro.modificarColor2(234, 234, 216)
+        self.cuadro.modificarColorLetra2(21, 67, 96)
+        self.cuadro.modificarColor3(234, 234, 216)
+        self.cuadro.modificarColorLetra3(21, 67, 96)
+        self.cuadro.modificarEvento(0)
+
+        self.cuadro_corazon = Boton("Vidas:")
+        self.cuadro_corazon.modificarPosicion(10, 360)
+        self.cuadro_corazon.modificarTamano(180,40)
+        self.cuadro_corazon.modificarPosicionTexto(30, 20)
+        self.cuadro_corazon.modificarColor1(255, 255, 255)
+        self.cuadro_corazon.modificarColorLetra1(21, 67, 96)
+        self.cuadro_corazon.modificarColor2(255, 255, 255)
+        self.cuadro_corazon.modificarColorLetra2(21, 67, 96)
+        self.cuadro_corazon.modificarColor3(255, 255, 255)
+        self.cuadro_corazon.modificarColorLetra3(21, 67, 96)
+        self.cuadro_corazon.modificarEvento(0)
+
+        self.cuadro_tiempo = Boton("Tiempo:")
+        self.cuadro_tiempo.modificarPosicion(10, 10)
+        self.cuadro_tiempo.modificarTamano(180,40)
+        self.cuadro_tiempo.modificarPosicionTexto(30, 20)
+        self.cuadro_tiempo.modificarColor1(255, 255, 255)
+        self.cuadro_tiempo.modificarColorLetra1(21, 67, 96)
+        self.cuadro_tiempo.modificarColor2(255, 255, 255)
+        self.cuadro_tiempo.modificarColorLetra2(21, 67, 96)
+        self.cuadro_tiempo.modificarColor3(255, 255, 255)
+        self.cuadro_tiempo.modificarColorLetra3(21, 67, 96)
+        self.cuadro_tiempo.modificarEvento(0)
+
+        self.lblTiempo = Titulo("30", 120, 32, 20, 2, (20, 90, 50))
+
+        self.cuadro_Puntuacion = Boton("Puntuacion:")
+        self.cuadro_Puntuacion.modificarPosicion(450, 360)
+        self.cuadro_Puntuacion.modificarTamano(180,40)
+        self.cuadro_Puntuacion.modificarPosicionTexto(50, 20)
+        self.cuadro_Puntuacion.modificarColor1(255, 255, 255)
+        self.cuadro_Puntuacion.modificarColorLetra1(21, 67, 96)
+        self.cuadro_Puntuacion.modificarColor2(255, 255, 255)
+        self.cuadro_Puntuacion.modificarColorLetra2(21, 67, 96)
+        self.cuadro_Puntuacion.modificarColor3(255, 255, 255)
+        self.cuadro_Puntuacion.modificarColorLetra3(21, 67, 96)
+        self.cuadro_Puntuacion.modificarEvento(0)
+
+        self.lblPuntuacion = Titulo("0", 590, 380, 20, 2, (36, 32, 163))
+
+        img_vidas="view/img/corazon.jpg"
+        self.vida1 = Imagen(img_vidas, (65, 360))
+        self.vida1.cambiarEscala(0.25)
+        self.vida2 = Imagen(img_vidas, (105, 360))
+        self.vida2.cambiarEscala(0.25)
+        self.vida3 = Imagen(img_vidas, (145, 360))
+        self.vida3.cambiarEscala(0.25)
+
+        self.btnOpcion1 = Boton("Opcion1")
+        self.btnOpcion1.modificarPosicion(30, 280)
+        self.btnOpcion1.modificarTamano(140,50)
+        self.btnOpcion1.modificarPosicionTexto(40, 27)
+        self.btnOpcion1.modificarColor1(234, 234, 216)
+        self.btnOpcion1.modificarColorLetra1(21, 67, 96)
+        self.btnOpcion1.modificarColor2(209, 210, 179)
+        self.btnOpcion1.modificarColorLetra2(21, 67, 96)
+        self.btnOpcion1.modificarColor3(91, 202, 213)
+        self.btnOpcion1.modificarColorLetra3(21, 67, 96)
+        self.btnOpcion1.modificarEvento(0)
+        self.btnOpcion2 = Boton("Opcion2")
+        self.btnOpcion2.modificarPosicion(180, 280)
+        self.btnOpcion2.modificarTamano(140,50)
+        self.btnOpcion2.modificarPosicionTexto(40, 27)
+        self.btnOpcion2.modificarColor1(234, 234, 216)
+        self.btnOpcion2.modificarColorLetra1(21, 67, 96)
+        self.btnOpcion2.modificarColor2(209, 210, 179)
+        self.btnOpcion2.modificarColorLetra2(21, 67, 96)
+        self.btnOpcion2.modificarColor3(91, 202, 213)
+        self.btnOpcion2.modificarColorLetra3(21, 67, 96)
+        self.btnOpcion2.modificarEvento(0)
+        self.btnOpcion3 = Boton("Opcion3")
+        self.btnOpcion3.modificarPosicion(330, 280)
+        self.btnOpcion3.modificarTamano(140,50)
+        self.btnOpcion3.modificarPosicionTexto(40, 27)
+        self.btnOpcion3.modificarColor1(234, 234, 216)
+        self.btnOpcion3.modificarColorLetra1(21, 67, 96)
+        self.btnOpcion3.modificarColor2(209, 210, 179)
+        self.btnOpcion3.modificarColorLetra2(21, 67, 96)
+        self.btnOpcion3.modificarColor3(91, 202, 213)
+        self.btnOpcion3.modificarColorLetra3(21, 67, 96)
+        self.btnOpcion3.modificarEvento(0)
+        self.btnOpcion4 = Boton("Opcion4")
+        self.btnOpcion4.modificarPosicion(480, 280)
+        self.btnOpcion4.modificarTamano(140,50)
+        self.btnOpcion4.modificarPosicionTexto(40, 27)
+        self.btnOpcion4.modificarColor1(234, 234, 216)
+        self.btnOpcion4.modificarColorLetra1(21, 67, 96)
+        self.btnOpcion4.modificarColor2(209, 210, 179)
+        self.btnOpcion4.modificarColorLetra2(21, 67, 96)
+        self.btnOpcion4.modificarColor3(91, 202, 213)
+        self.btnOpcion4.modificarColorLetra3(21, 67, 96)
+        self.btnOpcion4.modificarEvento(0)
+
+        self.btnInicio = Boton("Salir")
+        self.btnInicio.modificarPosicion(460, 420)
+        self.btnInicio.modificarTamano(160,50)
+        self.btnInicio.modificarPosicionTexto(30, 27)
+        self.btnInicio.modificarColor1(234, 234, 216)
+        self.btnInicio.modificarColorLetra1(21, 67, 96)
+        self.btnInicio.modificarColor2(209, 210, 179)
+        self.btnInicio.modificarColorLetra2(21, 67, 96)
+        self.btnInicio.modificarColor3(91, 202, 213)
+        self.btnInicio.modificarColorLetra3(21, 67, 96)
+        self.btnInicio.modificarEvento(6)
+
+    def pintar(self,screen):
+        """
+        Pinta en pantalla la parte grafica
+
+        @param screen: Pantalla en la que se va a pintar
+        @type screen: Surface
+        """
+        self.fondo.ponerImagen(screen)
+        self.titulo.pintar(screen)
+        self.lblNivel.pintar(screen)
+
+        self.cuadro.pintar(screen)
+        self.cuadro_corazon.pintar(screen)
+
+        self.cuadro_tiempo.pintar(screen)
+        self.cuadro_Puntuacion.pintar(screen)
+
+        self.lblPuntuacion.pintar(screen)
+        self.lblTiempo.pintar(screen)
+
+        if (self.vida_actuales == 3):
+            self.vida1.ponerImagen(screen)
+            self.vida2.ponerImagen(screen)
+            self.vida3.ponerImagen(screen)
+        elif (self.vida_actuales == 2):
+            self.vida1.ponerImagen(screen)
+            self.vida2.ponerImagen(screen)
+        elif (self.vida_actuales == 1):
+            self.vida1.ponerImagen(screen)
+        else:
+            #GAME OVER
+            pass
+
+        self.btnOpcion1.pintar(screen)
+        self.btnOpcion2.pintar(screen)
+        self.btnOpcion3.pintar(screen)
+        self.btnOpcion4.pintar(screen)
+        self.btnInicio.pintar(screen)
+
+
     def invertirPalabra(self, palabra):
         """
         Invierte Palabra::
