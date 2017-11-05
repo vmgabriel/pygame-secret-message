@@ -30,16 +30,6 @@ class eveFrmIni:
         """Metodo de salida del proceso"""
         sys.exit(0)
 
-    # def getEventosPersonalizados(self,ev1,ev2):
-    #     """
-    #     Recibira los eventos personalizados para poder ser personalizados
-    #
-    #     @type ev1: Evento personalizado 1 entrada de imagen inicializada en la vista
-    #     @type ev2: Evento personalizado 2 salida de imagen inicializada en la vista
-    #     """
-    #     self.ev1=ev1
-    #     self.ev2=ev2
-
     def enviarEventoBoton(self, boton):
         """
         Metodo que recibe los botones para revisar sus eventos
