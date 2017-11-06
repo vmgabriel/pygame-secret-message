@@ -9,6 +9,7 @@ from pygame.locals import *
 from boton import Boton
 from imagenes import Imagen
 from titulo import Titulo
+from model.conector import Conexion
 
 """
 Formulario enfocado en la carga del juego
@@ -28,7 +29,18 @@ class Juego(object):
 
         self.construir()
 
-        self.vida_actuales = 3
+        self.vida_actuales = 2
+        self.puntuacion = 0
+        self.dificultad = 1
+        # 1 -> Facil
+        # 2 -> medio
+        # 3 -> Dificil
+        # Para implementar
+
+        self.consulta_query = "SELECT * FROM Palabra;"
+        self.conexion = Conexion()
+        self.palabras = self.conexion.enviar_consulta(self.consulta_query)
+        print self.palabras
 
     def construir(self):
         """
@@ -109,7 +121,7 @@ class Juego(object):
         self.btnOpcion1.modificarColorLetra2(21, 67, 96)
         self.btnOpcion1.modificarColor3(91, 202, 213)
         self.btnOpcion1.modificarColorLetra3(21, 67, 96)
-        self.btnOpcion1.modificarEvento(0)
+        self.btnOpcion1.modificarEvento(8)
         self.btnOpcion2 = Boton("Opcion2")
         self.btnOpcion2.modificarPosicion(180, 280)
         self.btnOpcion2.modificarTamano(140,50)
@@ -120,7 +132,7 @@ class Juego(object):
         self.btnOpcion2.modificarColorLetra2(21, 67, 96)
         self.btnOpcion2.modificarColor3(91, 202, 213)
         self.btnOpcion2.modificarColorLetra3(21, 67, 96)
-        self.btnOpcion2.modificarEvento(0)
+        self.btnOpcion2.modificarEvento(9)
         self.btnOpcion3 = Boton("Opcion3")
         self.btnOpcion3.modificarPosicion(330, 280)
         self.btnOpcion3.modificarTamano(140,50)
@@ -131,7 +143,7 @@ class Juego(object):
         self.btnOpcion3.modificarColorLetra2(21, 67, 96)
         self.btnOpcion3.modificarColor3(91, 202, 213)
         self.btnOpcion3.modificarColorLetra3(21, 67, 96)
-        self.btnOpcion3.modificarEvento(0)
+        self.btnOpcion3.modificarEvento(10)
         self.btnOpcion4 = Boton("Opcion4")
         self.btnOpcion4.modificarPosicion(480, 280)
         self.btnOpcion4.modificarTamano(140,50)
@@ -142,7 +154,7 @@ class Juego(object):
         self.btnOpcion4.modificarColorLetra2(21, 67, 96)
         self.btnOpcion4.modificarColor3(91, 202, 213)
         self.btnOpcion4.modificarColorLetra3(21, 67, 96)
-        self.btnOpcion4.modificarEvento(0)
+        self.btnOpcion4.modificarEvento(11)
 
         self.btnInicio = Boton("Salir")
         self.btnInicio.modificarPosicion(460, 420)
@@ -156,7 +168,36 @@ class Juego(object):
         self.btnInicio.modificarColorLetra3(21, 67, 96)
         self.btnInicio.modificarEvento(6)
 
-    def pintar(self,screen):
+        #Enviar al controlador
+        self.controlador.enviarEventoBoton(self.btnOpcion1)
+        self.controlador.enviarEventoBoton(self.btnOpcion2)
+        self.controlador.enviarEventoBoton(self.btnOpcion3)
+        self.controlador.enviarEventoBoton(self.btnOpcion4)
+        self.controlador.enviarEventoBoton(self.btnInicio)
+
+    def activar_botones(self):
+        self.btnOpcion1.modificarActivo(True)
+        self.btnOpcion2.modificarActivo(True)
+        self.btnOpcion3.modificarActivo(True)
+        self.btnOpcion4.modificarActivo(True)
+        self.btnInicio.modificarActivo(True)
+
+    def desactivar_botones(self):
+        self.btnOpcion1.modificarActivo(False)
+        self.btnOpcion2.modificarActivo(False)
+        self.btnOpcion3.modificarActivo(False)
+        self.btnOpcion4.modificarActivo(False)
+        self.btnInicio.modificarActivo(False)
+
+    def reiniciar(self):
+        self.vida_actuales = 2
+        self.puntuacion = 0
+        self.dificultad = 1
+
+    def perder(self):
+        print("Perdiste wey!!, que malo eres")
+
+    def pintar(self,screen, tiempo):
         """
         Pinta en pantalla la parte grafica
 
@@ -174,16 +215,17 @@ class Juego(object):
         self.cuadro_Puntuacion.pintar(screen)
 
         self.lblPuntuacion.pintar(screen)
+        self.lblTiempo.modificarTexto(str(tiempo))
         self.lblTiempo.pintar(screen)
 
-        if (self.vida_actuales == 3):
+        if (self.vida_actuales == 2):
             self.vida1.ponerImagen(screen)
             self.vida2.ponerImagen(screen)
             self.vida3.ponerImagen(screen)
-        elif (self.vida_actuales == 2):
+        elif (self.vida_actuales == 1):
             self.vida1.ponerImagen(screen)
             self.vida2.ponerImagen(screen)
-        elif (self.vida_actuales == 1):
+        elif (self.vida_actuales == 0):
             self.vida1.ponerImagen(screen)
         else:
             #GAME OVER
@@ -195,6 +237,14 @@ class Juego(object):
         self.btnOpcion4.pintar(screen)
         self.btnInicio.pintar(screen)
 
+    def modificar_tiempo(self, tiempo):
+        self.tiempo = tiempo
+
+    def quitar_vida(self):
+        self.vida_actuales -=1
+
+    def get_vidas_actuales(self):
+        return self.vida_actuales
 
     def invertirPalabra(self, palabra):
         """

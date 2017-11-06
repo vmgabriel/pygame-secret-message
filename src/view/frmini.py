@@ -587,11 +587,23 @@ class frmIni:
         self.vistaPuntuacion()
         tutorial = Tutorial(self.controlador)
         juego = Juego(self.controlador)
+        tiempoActivo = False
+
+        #Creacion de Nuevos eventos :P
+        TIEMPO = pygame.USEREVENT
+        NIVELFACIL = pygame.USEREVENT
+        NIVELMEDIO = pygame.USEREVENT
+        NIVELDIFICIL = pygame.USEREVENT
+
+        pygame.time.set_timer(TIEMPO,0)
+        pygame.time.set_timer(NIVELFACIL,0)
+        pygame.time.set_timer(NIVELMEDIO,0)
+        pygame.time.set_timer(NIVELDIFICIL,0)
 
         #While principal, es el enfocado de correr los procesos del juego
         while True:
             for eventos in pygame.event.get():
-                self.controlador.evePrincipal(eventos)
+                self.controlador.evePrincipal(eventos,TIEMPO)
 
             if self.etapa == 0:
                 #En la seccion que muestra los logos de todo
@@ -624,6 +636,10 @@ class frmIni:
                 self.desactivarBotonesMenuSalida()
                 self.desactivarBotonesPuntuacion()
                 tutorial.desactivarBotones()
+                juego.desactivar_botones()
+                pygame.time.set_timer(TIEMPO,0)
+                tiempoActivo = False
+                juego.reiniciar();
 
                 #En el menu
                 self.fondo_menu.ponerImagen(self.screen)
@@ -642,7 +658,11 @@ class frmIni:
                 self.desactivarBotonesMenuPrincipal()
                 self.desactivarBotonesMenuSalida()
                 self.desactivarBotonesPuntuacion()
+                juego.desactivar_botones()
                 tutorial.activarBotones()
+                pygame.time.set_timer(TIEMPO,0)
+                tiempoActivo = False
+                juego.reiniciar();
 
                 if (self.etapa == 2):
                     tutorial.pintar(self.screen)
@@ -652,13 +672,39 @@ class frmIni:
                 self.etapa = self.controlador.getEventoEjecutado()
             if self.etapa == 3:
                 #juego
-                juego.pintar(self.screen)
+                self.desactivarBotonesMenuPrincipal()
+                self.desactivarBotonesMenuSalida()
+                self.desactivarBotonesPuntuacion()
+                tutorial.desactivarBotones()
+                juego.activar_botones()
+
+                if (tiempoActivo):
+                    #pygame.time.set_timer(NIVELFACIL, 30000)
+                    if (self.controlador.getTiempo() == 0):
+                        self.controlador.setTiempo(30)
+                        print(juego.get_vidas_actuales())
+                        if (juego.get_vidas_actuales() == 0):
+                            pygame.time.set_timer(TIEMPO, 0)
+                            juego.perder()
+                        else:
+                            juego.quitar_vida()
+                    juego.pintar(self.screen,self.controlador.getTiempo())
+                else:
+                    #pygame.time.set_timer(NIVELFACIL, 30000)
+                    pygame.time.set_timer(TIEMPO, 1000)
+                    self.controlador.setTiempo(30)
+                    tiempoActivo = True
+                    juego.pintar(self.screen,self.controlador.getTiempo())
+
+                self.etapa = self.controlador.getEventoEjecutado()
             if self.etapa == 4:
                 #Puntuacion
                 self.activarBotonesPuntuacion()
                 self.desactivarBotonesMenuPrincipal()
                 self.desactivarBotonesMenuSalida()
+                juego.desactivar_botones()
                 tutorial.desactivarBotones()
+                pygame.time.set_timer(TIEMPO,0)
 
                 self.fondo_puntuacion.ponerImagen(self.screen)
                 self.titulomenu.pintar(self.screen)
@@ -713,7 +759,9 @@ class frmIni:
                 self.activarBotonesMenuSalida()
                 self.desactivarBotonesMenuPrincipal()
                 self.desactivarBotonesPuntuacion()
+                juego.desactivar_botones()
                 tutorial.desactivarBotones()
+                pygame.time.set_timer(TIEMPO,0)
 
                 self.fondo_menu.ponerImagen(self.screen)
                 self.titulomenu.pintar(self.screen)

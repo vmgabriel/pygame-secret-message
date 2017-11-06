@@ -25,10 +25,17 @@ class eveFrmIni:
         """Variable cargadora de algunos procesos"""
         self.eventoEjecutado = 0
         """Evento que puede enviarse a el formulario para saber en que estado esta"""
+        self.tiempo = 0
 
     def salir(self):
         """Metodo de salida del proceso"""
         sys.exit(0)
+
+    def getTiempo(self):
+        return self.tiempo
+
+    def setTiempo(self, tiempo):
+        self.tiempo = tiempo
 
     def enviarEventoBoton(self, boton):
         """
@@ -116,7 +123,23 @@ class eveFrmIni:
         self.botones[11].modificarActivo(False)
         self.botones[12].modificarActivo(False)
 
-    def evePrincipal(self,evento):
+    def activarBotonesJuego(self):
+        """Activa el conjunto de botones del juego"""
+        self.botones[13].modificarActivo(True)
+        self.botones[14].modificarActivo(True)
+        self.botones[15].modificarActivo(True)
+        self.botones[16].modificarActivo(True)
+        self.botones[17].modificarActivo(True)
+
+    def desactivarBotonesJuego(self):
+        """Desactiva el conjunto de botones del juego"""
+        self.botones[13].modificarActivo(False)
+        self.botones[14].modificarActivo(False)
+        self.botones[15].modificarActivo(False)
+        self.botones[16].modificarActivo(False)
+        self.botones[17].modificarActivo(False)
+
+    def evePrincipal(self,evento,TIEMPO):
         """
         Metodo que gestionara todos los procesos del juego
 
@@ -148,6 +171,18 @@ class eveFrmIni:
                             self.eventoEjecutado += 1
                         if (self.eventoEjecutado == 16):
                             self.eventoEjecutado = 1
+                    if (x.geteventoActivo() == 8):
+                        #Oprimida opcion 1
+                        print("Oprimido Opcion1")
+                    if (x.geteventoActivo() == 9):
+                        #Oprimida opcion 2
+                        print("Oprimido Opcion2")
+                    if (x.geteventoActivo() == 10):
+                        #Oprimida opcion 3
+                        print("Oprimido Opcion3")
+                    if (x.geteventoActivo() == 11):
+                        #Oprimida opcion 4
+                        print("Oprimido Opcion4")
         if evento.type == pygame.MOUSEBUTTONUP:
             for x in self.botones:
                 if (x.estaEncima(evento.pos[0], evento.pos[1])):
@@ -157,9 +192,12 @@ class eveFrmIni:
                 self.desactivarBotonesMenuSalida()
                 self.desactivarBotonesPuntuacion()
                 self.desactivarBotonesTutorial()
+                self.desactivarBotonesJuego()
         if evento.type == pygame.MOUSEMOTION:
             for x in self.botones:
                 if (x.estaEncima(evento.pos[0], evento.pos[1])):
                     x.modificarEstadoBoton(2)
                 else:
                     x.modificarEstadoBoton(1)
+        if evento.type == TIEMPO:
+            self.tiempo-=1
