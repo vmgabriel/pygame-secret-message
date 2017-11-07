@@ -11,6 +11,8 @@ from imagenes import Imagen
 from titulo import Titulo
 from tutorial import Tutorial
 from juego import Juego
+from over import Terminar
+from model.conector import Conexion
 
 """
 Formulario que cargara, primera ventana
@@ -202,7 +204,10 @@ class frmIni:
         self.tablapuntaje.modificarColorLetra3(21, 67, 96)
         self.tablapuntaje.modificarEvento(0)
 
+        #Meter todo en un arreglo para modificarTexto de forma facil
+        self.arregloTabla = []
         #Para lo demas
+        arregloFila = []
         self.tablanum1 = Boton("1")
         self.tablanum1.modificarPosicion(30,92)
         self.tablanum1.modificarTamano(40,40)
@@ -214,7 +219,7 @@ class frmIni:
         self.tablanum1.modificarColorLetra2(21, 67, 96)
         self.tablanum1.modificarColorLetra3(21, 67, 96)
         self.tablanum1.modificarEvento(0)
-        self.tablajug1 = Boton("Jugador1")
+        self.tablajug1 = Boton("")
         self.tablajug1.modificarPosicion(73,92)
         self.tablajug1.modificarTamano(300,40)
         self.tablajug1.modificarPosicionTexto(40, 20)
@@ -225,7 +230,8 @@ class frmIni:
         self.tablajug1.modificarColorLetra2(21, 67, 96)
         self.tablajug1.modificarColorLetra3(21, 67, 96)
         self.tablajug1.modificarEvento(0)
-        self.tablafecha1 = Boton("Fecha1")
+        arregloFila.append(self.tablajug1)
+        self.tablafecha1 = Boton("")
         self.tablafecha1.modificarPosicion(375,92)
         self.tablafecha1.modificarTamano(120,40)
         self.tablafecha1.modificarPosicionTexto(40, 20)
@@ -236,7 +242,8 @@ class frmIni:
         self.tablafecha1.modificarColorLetra2(21, 67, 96)
         self.tablafecha1.modificarColorLetra3(21, 67, 96)
         self.tablafecha1.modificarEvento(0)
-        self.tablapuntaje1 = Boton("Puntaje1")
+        arregloFila.append(self.tablafecha1)
+        self.tablapuntaje1 = Boton("")
         self.tablapuntaje1.modificarPosicion(498,92)
         self.tablapuntaje1.modificarTamano(100,40)
         self.tablapuntaje1.modificarPosicionTexto(40, 20)
@@ -247,6 +254,9 @@ class frmIni:
         self.tablapuntaje1.modificarColorLetra2(21, 67, 96)
         self.tablapuntaje1.modificarColorLetra3(21, 67, 96)
         self.tablapuntaje1.modificarEvento(0)
+        arregloFila.append(self.tablapuntaje1)
+        self.arregloTabla.append(arregloFila)
+        arregloFila = []
         self.tablanum2 = Boton("2")
         self.tablanum2.modificarPosicion(30,134)
         self.tablanum2.modificarTamano(40,40)
@@ -258,7 +268,7 @@ class frmIni:
         self.tablanum2.modificarColorLetra2(21, 67, 96)
         self.tablanum2.modificarColorLetra3(21, 67, 96)
         self.tablanum2.modificarEvento(0)
-        self.tablajug2 = Boton("Jugador2")
+        self.tablajug2 = Boton("")
         self.tablajug2.modificarPosicion(73,134)
         self.tablajug2.modificarTamano(300,40)
         self.tablajug2.modificarPosicionTexto(40, 20)
@@ -269,7 +279,8 @@ class frmIni:
         self.tablajug2.modificarColorLetra2(21, 67, 96)
         self.tablajug2.modificarColorLetra3(21, 67, 96)
         self.tablajug2.modificarEvento(0)
-        self.tablafecha2 = Boton("Fecha2")
+        arregloFila.append(self.tablajug2)
+        self.tablafecha2 = Boton("")
         self.tablafecha2.modificarPosicion(375,134)
         self.tablafecha2.modificarTamano(120,40)
         self.tablafecha2.modificarPosicionTexto(40, 20)
@@ -280,7 +291,8 @@ class frmIni:
         self.tablafecha2.modificarColorLetra2(21, 67, 96)
         self.tablafecha2.modificarColorLetra3(21, 67, 96)
         self.tablafecha2.modificarEvento(0)
-        self.tablapuntaje2 = Boton("Puntaje2")
+        arregloFila.append(self.tablafecha2)
+        self.tablapuntaje2 = Boton("")
         self.tablapuntaje2.modificarPosicion(498,134)
         self.tablapuntaje2.modificarTamano(100,40)
         self.tablapuntaje2.modificarPosicionTexto(40, 20)
@@ -291,6 +303,9 @@ class frmIni:
         self.tablapuntaje2.modificarColorLetra2(21, 67, 96)
         self.tablapuntaje2.modificarColorLetra3(21, 67, 96)
         self.tablapuntaje2.modificarEvento(0)
+        arregloFila.append(self.tablapuntaje2)
+        self.arregloTabla.append(arregloFila)
+        arregloFila = []
         self.tablanum3 = Boton("3")
         self.tablanum3.modificarPosicion(30,176)
         self.tablanum3.modificarTamano(40,40)
@@ -302,7 +317,7 @@ class frmIni:
         self.tablanum3.modificarColorLetra2(21, 67, 96)
         self.tablanum3.modificarColorLetra3(21, 67, 96)
         self.tablanum3.modificarEvento(0)
-        self.tablajug3 = Boton("Jugador3")
+        self.tablajug3 = Boton("")
         self.tablajug3.modificarPosicion(73,176)
         self.tablajug3.modificarTamano(300,40)
         self.tablajug3.modificarPosicionTexto(40, 20)
@@ -313,7 +328,8 @@ class frmIni:
         self.tablajug3.modificarColorLetra2(21, 67, 96)
         self.tablajug3.modificarColorLetra3(21, 67, 96)
         self.tablajug3.modificarEvento(0)
-        self.tablafecha3 = Boton("Fecha3")
+        arregloFila.append(self.tablajug3)
+        self.tablafecha3 = Boton("")
         self.tablafecha3.modificarPosicion(375,176)
         self.tablafecha3.modificarTamano(120,40)
         self.tablafecha3.modificarPosicionTexto(40, 20)
@@ -324,7 +340,8 @@ class frmIni:
         self.tablafecha3.modificarColorLetra2(21, 67, 96)
         self.tablafecha3.modificarColorLetra3(21, 67, 96)
         self.tablafecha3.modificarEvento(0)
-        self.tablapuntaje3 = Boton("Puntaje3")
+        arregloFila.append(self.tablafecha3)
+        self.tablapuntaje3 = Boton("")
         self.tablapuntaje3.modificarPosicion(498,176)
         self.tablapuntaje3.modificarTamano(100,40)
         self.tablapuntaje3.modificarPosicionTexto(40, 20)
@@ -335,6 +352,9 @@ class frmIni:
         self.tablapuntaje3.modificarColorLetra2(21, 67, 96)
         self.tablapuntaje3.modificarColorLetra3(21, 67, 96)
         self.tablapuntaje3.modificarEvento(0)
+        arregloFila.append(self.tablapuntaje3)
+        self.arregloTabla.append(arregloFila)
+        arregloFila = []
         self.tablanum4 = Boton("4")
         self.tablanum4.modificarPosicion(30,218)
         self.tablanum4.modificarTamano(40,40)
@@ -346,7 +366,7 @@ class frmIni:
         self.tablanum4.modificarColorLetra2(21, 67, 96)
         self.tablanum4.modificarColorLetra3(21, 67, 96)
         self.tablanum4.modificarEvento(0)
-        self.tablajug4 = Boton("Jugador4")
+        self.tablajug4 = Boton("")
         self.tablajug4.modificarPosicion(73,218)
         self.tablajug4.modificarTamano(300,40)
         self.tablajug4.modificarPosicionTexto(40, 20)
@@ -357,7 +377,8 @@ class frmIni:
         self.tablajug4.modificarColorLetra2(21, 67, 96)
         self.tablajug4.modificarColorLetra3(21, 67, 96)
         self.tablajug4.modificarEvento(0)
-        self.tablafecha4 = Boton("Fecha4")
+        arregloFila.append(self.tablajug4)
+        self.tablafecha4 = Boton("")
         self.tablafecha4.modificarPosicion(375,218)
         self.tablafecha4.modificarTamano(120,40)
         self.tablafecha4.modificarPosicionTexto(40, 20)
@@ -368,7 +389,8 @@ class frmIni:
         self.tablafecha4.modificarColorLetra2(21, 67, 96)
         self.tablafecha4.modificarColorLetra3(21, 67, 96)
         self.tablafecha4.modificarEvento(0)
-        self.tablapuntaje4 = Boton("Puntaje4")
+        arregloFila.append(self.tablafecha4)
+        self.tablapuntaje4 = Boton("")
         self.tablapuntaje4.modificarPosicion(498,218)
         self.tablapuntaje4.modificarTamano(100,40)
         self.tablapuntaje4.modificarPosicionTexto(40, 20)
@@ -379,6 +401,9 @@ class frmIni:
         self.tablapuntaje4.modificarColorLetra2(21, 67, 96)
         self.tablapuntaje4.modificarColorLetra3(21, 67, 96)
         self.tablapuntaje4.modificarEvento(0)
+        arregloFila.append(self.tablapuntaje4)
+        self.arregloTabla.append(arregloFila)
+        arregloFila = []
         self.tablanum5 = Boton("5")
         self.tablanum5.modificarPosicion(30,260)
         self.tablanum5.modificarTamano(40,40)
@@ -390,7 +415,7 @@ class frmIni:
         self.tablanum5.modificarColorLetra2(21, 67, 96)
         self.tablanum5.modificarColorLetra3(21, 67, 96)
         self.tablanum5.modificarEvento(0)
-        self.tablajug5 = Boton("Jugador5")
+        self.tablajug5 = Boton("")
         self.tablajug5.modificarPosicion(73,260)
         self.tablajug5.modificarTamano(300,40)
         self.tablajug5.modificarPosicionTexto(40, 20)
@@ -401,7 +426,8 @@ class frmIni:
         self.tablajug5.modificarColorLetra2(21, 67, 96)
         self.tablajug5.modificarColorLetra3(21, 67, 96)
         self.tablajug5.modificarEvento(0)
-        self.tablafecha5 = Boton("Fecha5")
+        arregloFila.append(self.tablajug5)
+        self.tablafecha5 = Boton("")
         self.tablafecha5.modificarPosicion(375,260)
         self.tablafecha5.modificarTamano(120,40)
         self.tablafecha5.modificarPosicionTexto(40, 20)
@@ -412,7 +438,8 @@ class frmIni:
         self.tablafecha5.modificarColorLetra2(21, 67, 96)
         self.tablafecha5.modificarColorLetra3(21, 67, 96)
         self.tablafecha5.modificarEvento(0)
-        self.tablapuntaje5 = Boton("Puntaje5")
+        arregloFila.append(self.tablafecha5)
+        self.tablapuntaje5 = Boton("")
         self.tablapuntaje5.modificarPosicion(498,260)
         self.tablapuntaje5.modificarTamano(100,40)
         self.tablapuntaje5.modificarPosicionTexto(40, 20)
@@ -423,6 +450,9 @@ class frmIni:
         self.tablapuntaje5.modificarColorLetra2(21, 67, 96)
         self.tablapuntaje5.modificarColorLetra3(21, 67, 96)
         self.tablapuntaje5.modificarEvento(0)
+        arregloFila.append(self.tablapuntaje5)
+        self.arregloTabla.append(arregloFila)
+        arregloFila = []
         self.tablanum6 = Boton("6")
         self.tablanum6.modificarPosicion(30,302)
         self.tablanum6.modificarTamano(40,40)
@@ -434,7 +464,7 @@ class frmIni:
         self.tablanum6.modificarColorLetra2(21, 67, 96)
         self.tablanum6.modificarColorLetra3(21, 67, 96)
         self.tablanum6.modificarEvento(0)
-        self.tablajug6 = Boton("Jugador6")
+        self.tablajug6 = Boton("")
         self.tablajug6.modificarPosicion(73,302)
         self.tablajug6.modificarTamano(300,40)
         self.tablajug6.modificarPosicionTexto(40, 20)
@@ -445,7 +475,8 @@ class frmIni:
         self.tablajug6.modificarColorLetra2(21, 67, 96)
         self.tablajug6.modificarColorLetra3(21, 67, 96)
         self.tablajug6.modificarEvento(0)
-        self.tablafecha6 = Boton("Fecha6")
+        arregloFila.append(self.tablajug6)
+        self.tablafecha6 = Boton("")
         self.tablafecha6.modificarPosicion(375,302)
         self.tablafecha6.modificarTamano(120,40)
         self.tablafecha6.modificarPosicionTexto(40, 20)
@@ -456,7 +487,8 @@ class frmIni:
         self.tablafecha6.modificarColorLetra2(21, 67, 96)
         self.tablafecha6.modificarColorLetra3(21, 67, 96)
         self.tablafecha6.modificarEvento(0)
-        self.tablapuntaje6 = Boton("Puntaje6")
+        arregloFila.append(self.tablafecha6)
+        self.tablapuntaje6 = Boton("")
         self.tablapuntaje6.modificarPosicion(498,302)
         self.tablapuntaje6.modificarTamano(100,40)
         self.tablapuntaje6.modificarPosicionTexto(40, 20)
@@ -467,6 +499,9 @@ class frmIni:
         self.tablapuntaje6.modificarColorLetra2(21, 67, 96)
         self.tablapuntaje6.modificarColorLetra3(21, 67, 96)
         self.tablapuntaje6.modificarEvento(0)
+        arregloFila.append(self.tablapuntaje6)
+        self.arregloTabla.append(arregloFila)
+        arregloFila = []
         self.tablanum7 = Boton("7")
         self.tablanum7.modificarPosicion(30,344)
         self.tablanum7.modificarTamano(40,40)
@@ -478,7 +513,7 @@ class frmIni:
         self.tablanum7.modificarColorLetra2(21, 67, 96)
         self.tablanum7.modificarColorLetra3(21, 67, 96)
         self.tablanum7.modificarEvento(0)
-        self.tablajug7 = Boton("Jugador7")
+        self.tablajug7 = Boton("")
         self.tablajug7.modificarPosicion(73,344)
         self.tablajug7.modificarTamano(300,40)
         self.tablajug7.modificarPosicionTexto(40, 20)
@@ -489,7 +524,8 @@ class frmIni:
         self.tablajug7.modificarColorLetra2(21, 67, 96)
         self.tablajug7.modificarColorLetra3(21, 67, 96)
         self.tablajug7.modificarEvento(0)
-        self.tablafecha7 = Boton("Fecha7")
+        arregloFila.append(self.tablajug7)
+        self.tablafecha7 = Boton("")
         self.tablafecha7.modificarPosicion(375,344)
         self.tablafecha7.modificarTamano(120,40)
         self.tablafecha7.modificarPosicionTexto(40, 20)
@@ -500,7 +536,8 @@ class frmIni:
         self.tablafecha7.modificarColorLetra2(21, 67, 96)
         self.tablafecha7.modificarColorLetra3(21, 67, 96)
         self.tablafecha7.modificarEvento(0)
-        self.tablapuntaje7 = Boton("Puntaje7")
+        arregloFila.append(self.tablafecha7)
+        self.tablapuntaje7 = Boton("")
         self.tablapuntaje7.modificarPosicion(498,344)
         self.tablapuntaje7.modificarTamano(100,40)
         self.tablapuntaje7.modificarPosicionTexto(40, 20)
@@ -511,6 +548,9 @@ class frmIni:
         self.tablapuntaje7.modificarColorLetra2(21, 67, 96)
         self.tablapuntaje7.modificarColorLetra3(21, 67, 96)
         self.tablapuntaje7.modificarEvento(0)
+        arregloFila.append(self.tablapuntaje7)
+        self.arregloTabla.append(arregloFila)
+        arregloFila = []
 
         self.btnMenu = Boton("Inicio")
         self.btnMenu.modificarPosicion(460, 420)
@@ -587,23 +627,20 @@ class frmIni:
         self.vistaPuntuacion()
         tutorial = Tutorial(self.controlador)
         juego = Juego(self.controlador)
+        over = Terminar()
         tiempoActivo = False
+        puntuacion = 0
 
         #Creacion de Nuevos eventos :P
         TIEMPO = pygame.USEREVENT
-        NIVELFACIL = pygame.USEREVENT
-        NIVELMEDIO = pygame.USEREVENT
-        NIVELDIFICIL = pygame.USEREVENT
 
         pygame.time.set_timer(TIEMPO,0)
-        pygame.time.set_timer(NIVELFACIL,0)
-        pygame.time.set_timer(NIVELMEDIO,0)
-        pygame.time.set_timer(NIVELDIFICIL,0)
 
         #While principal, es el enfocado de correr los procesos del juego
         while True:
             for eventos in pygame.event.get():
                 self.controlador.evePrincipal(eventos,TIEMPO)
+                over.eventos(eventos)
 
             if self.etapa == 0:
                 #En la seccion que muestra los logos de todo
@@ -639,7 +676,8 @@ class frmIni:
                 juego.desactivar_botones()
                 pygame.time.set_timer(TIEMPO,0)
                 tiempoActivo = False
-                juego.reiniciar();
+                juego.reiniciar()
+                over.desactivarTextBox()
 
                 #En el menu
                 self.fondo_menu.ponerImagen(self.screen)
@@ -680,20 +718,46 @@ class frmIni:
 
                 if (tiempoActivo):
                     #pygame.time.set_timer(NIVELFACIL, 30000)
-                    if (self.controlador.getTiempo() == 0):
-                        self.controlador.setTiempo(30)
-                        print(juego.get_vidas_actuales())
-                        if (juego.get_vidas_actuales() == 0):
-                            pygame.time.set_timer(TIEMPO, 0)
-                            juego.perder()
+                    if not (self.controlador.getOpcionEscojida() == ""):
+                        if not (juego.get_vidas_actuales() <= 0):
+                            if (juego.compararOpcion(self.controlador.getOpcionEscojida())):
+                                juego.sumarPuntaje()
+                                juego.seleccionar_pregunta()
+                                self.controlador.setOpcionEscojida("")
+                            else:
+                                juego.quitar_vida()
+                                self.controlador.setOpcionEscojida("")
+                                juego.seleccionar_pregunta()
                         else:
+                            pygame.time.set_timer(TIEMPO, 0)
+                            puntuacion = juego.get_puntuacion()
+                            over.modificar_puntuacion(juego.get_puntuacion())
+                            tiempoActivo = False
+                            self.controlador.setEventoEjecutado(6)
+                            #tiempoActivo = False
+                            #AQUI PERDIO !!!!!
+                        self.controlador.setTiempo(10)
+                    if (self.controlador.getTiempo() == 0):
+                        self.controlador.setTiempo(10)
+                        if (juego.get_vidas_actuales() <= 0):
+                            pygame.time.set_timer(TIEMPO, 0)
+                            puntuacion = juego.get_puntuacion()
+                            over.modificar_puntuacion(juego.get_puntuacion())
+                            tiempoActivo = False
+                            self.controlador.setEventoEjecutado(6)
+                            #tiempoActivo = False
+                            #AQUI PERDIO !!!!!
+                        else:
+                            juego.seleccionar_pregunta()
                             juego.quitar_vida()
                     juego.pintar(self.screen,self.controlador.getTiempo())
                 else:
                     #pygame.time.set_timer(NIVELFACIL, 30000)
                     pygame.time.set_timer(TIEMPO, 1000)
-                    self.controlador.setTiempo(30)
+                    self.controlador.setTiempo(10)
                     tiempoActivo = True
+                    juego.seleccionar_pregunta()
+                    self.controlador.setOpcionEscojida("")
                     juego.pintar(self.screen,self.controlador.getTiempo())
 
                 self.etapa = self.controlador.getEventoEjecutado()
@@ -706,6 +770,23 @@ class frmIni:
                 tutorial.desactivarBotones()
                 pygame.time.set_timer(TIEMPO,0)
 
+                for x in self.arregloTabla:
+                    for y in x:
+                        y.modificarString("")
+
+                query_puntuacion = "SELECT * FROM Jugador ORDER BY puntuacion DESC LIMIT 7;"
+                conector = Conexion()
+                lista = conector.enviar_consulta(query_puntuacion)
+
+                cont = 0
+
+                for x in lista:
+                    (_,jug,fecha,punt) = x
+                    self.arregloTabla[cont][0].modificarString(jug)
+                    self.arregloTabla[cont][1].modificarString(str(fecha))
+                    self.arregloTabla[cont][2].modificarString(str(punt))
+                    cont += 1
+
                 self.fondo_puntuacion.ponerImagen(self.screen)
                 self.titulomenu.pintar(self.screen)
                 self.lblPuntuacion.pintar(self.screen)
@@ -717,39 +798,16 @@ class frmIni:
                 self.tablapuntaje.pintar(self.screen)
 
                 self.tablanum1.pintar(self.screen)
-                self.tablajug1.pintar(self.screen)
-                self.tablafecha1.pintar(self.screen)
-                self.tablapuntaje1.pintar(self.screen)
-
                 self.tablanum2.pintar(self.screen)
-                self.tablajug2.pintar(self.screen)
-                self.tablafecha2.pintar(self.screen)
-                self.tablapuntaje2.pintar(self.screen)
-
                 self.tablanum3.pintar(self.screen)
-                self.tablajug3.pintar(self.screen)
-                self.tablafecha3.pintar(self.screen)
-                self.tablapuntaje3.pintar(self.screen)
-
                 self.tablanum4.pintar(self.screen)
-                self.tablajug4.pintar(self.screen)
-                self.tablafecha4.pintar(self.screen)
-                self.tablapuntaje4.pintar(self.screen)
-
                 self.tablanum5.pintar(self.screen)
-                self.tablajug5.pintar(self.screen)
-                self.tablafecha5.pintar(self.screen)
-                self.tablapuntaje5.pintar(self.screen)
-
                 self.tablanum6.pintar(self.screen)
-                self.tablajug6.pintar(self.screen)
-                self.tablafecha6.pintar(self.screen)
-                self.tablapuntaje6.pintar(self.screen)
-
                 self.tablanum7.pintar(self.screen)
-                self.tablajug7.pintar(self.screen)
-                self.tablafecha7.pintar(self.screen)
-                self.tablapuntaje7.pintar(self.screen)
+
+                for x in self.arregloTabla:
+                    for y in x:
+                        y.pintar(self.screen)
 
                 self.btnMenu.pintar(self.screen)
 
@@ -771,6 +829,24 @@ class frmIni:
                 self.btnNo.pintar(self.screen)
 
                 self.etapa = self.controlador.getEventoEjecutado()
+
+            if self.etapa == 6:
+                #GAME OVER
+                self.desactivarBotonesMenuSalida()
+                self.desactivarBotonesMenuPrincipal()
+                self.desactivarBotonesPuntuacion()
+                juego.desactivar_botones()
+                tutorial.desactivarBotones()
+                over.activarTextBox()
+                pygame.time.set_timer(TIEMPO,0)
+
+                over.pintar(self.screen)
+
+                if (over.getFinal()):
+                    print ("HELLO WWWWWWW")
+                    self.etapa = 1
+                    self.controlador.setEventoEjecutado(1)
+                    over.reiniciar()
 
             pygame.display.flip()
                 #Se envian los evento para que el los procese

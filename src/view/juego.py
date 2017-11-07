@@ -10,6 +10,7 @@ from boton import Boton
 from imagenes import Imagen
 from titulo import Titulo
 from model.conector import Conexion
+import random
 
 """
 Formulario enfocado en la carga del juego
@@ -25,22 +26,42 @@ class Juego(object):
     def __init__(self, ctrl):
         self.controlador = ctrl
 
+        self.mensaje_encriptado = ""
+        self.mensaje_desencriptado = ""
+
+        self.consulta_query = "SELECT * FROM Palabra;"
+        self.conexion = Conexion()
+        self.palabras = self.conexion.enviar_consulta(self.consulta_query)
+
         self.fondo = "view/img/fondos/Espera-espectral.jpg"
+
+        self.abecedario = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p',
+            'q','r','s','t','u','v','w','x','y','z']
+
+        self.mensajes()
 
         self.construir()
 
         self.vida_actuales = 2
         self.puntuacion = 0
         self.dificultad = 1
+        self.tiempoJuego = 0
         # 1 -> Facil
         # 2 -> medio
         # 3 -> Dificil
         # Para implementar
 
-        self.consulta_query = "SELECT * FROM Palabra;"
-        self.conexion = Conexion()
-        self.palabras = self.conexion.enviar_consulta(self.consulta_query)
-        print self.palabras
+    def mensajes(self):
+        self.titulos = {
+            "e_invertir":"Encriptar Invertir",
+            "d_invertir":"Desencriptar Invertir",
+            "e_atbash":"Encriptar Atbash",
+            "d_atbash":"Desencriptar Atbash",
+            "e_polibi":"Encriptar Polibi",
+            "d_polibi":"Desencriptar Polibi",
+            "e_cesar":"Encriptar Cesar",
+            "d_cesar":"Desencriptar Cesar"
+            }
 
     def construir(self):
         """
@@ -114,7 +135,7 @@ class Juego(object):
         self.btnOpcion1 = Boton("Opcion1")
         self.btnOpcion1.modificarPosicion(30, 280)
         self.btnOpcion1.modificarTamano(140,50)
-        self.btnOpcion1.modificarPosicionTexto(40, 27)
+        self.btnOpcion1.modificarPosicionTexto(60, 27)
         self.btnOpcion1.modificarColor1(234, 234, 216)
         self.btnOpcion1.modificarColorLetra1(21, 67, 96)
         self.btnOpcion1.modificarColor2(209, 210, 179)
@@ -125,7 +146,7 @@ class Juego(object):
         self.btnOpcion2 = Boton("Opcion2")
         self.btnOpcion2.modificarPosicion(180, 280)
         self.btnOpcion2.modificarTamano(140,50)
-        self.btnOpcion2.modificarPosicionTexto(40, 27)
+        self.btnOpcion2.modificarPosicionTexto(60, 27)
         self.btnOpcion2.modificarColor1(234, 234, 216)
         self.btnOpcion2.modificarColorLetra1(21, 67, 96)
         self.btnOpcion2.modificarColor2(209, 210, 179)
@@ -136,7 +157,7 @@ class Juego(object):
         self.btnOpcion3 = Boton("Opcion3")
         self.btnOpcion3.modificarPosicion(330, 280)
         self.btnOpcion3.modificarTamano(140,50)
-        self.btnOpcion3.modificarPosicionTexto(40, 27)
+        self.btnOpcion3.modificarPosicionTexto(60, 27)
         self.btnOpcion3.modificarColor1(234, 234, 216)
         self.btnOpcion3.modificarColorLetra1(21, 67, 96)
         self.btnOpcion3.modificarColor2(209, 210, 179)
@@ -147,7 +168,7 @@ class Juego(object):
         self.btnOpcion4 = Boton("Opcion4")
         self.btnOpcion4.modificarPosicion(480, 280)
         self.btnOpcion4.modificarTamano(140,50)
-        self.btnOpcion4.modificarPosicionTexto(40, 27)
+        self.btnOpcion4.modificarPosicionTexto(60, 27)
         self.btnOpcion4.modificarColor1(234, 234, 216)
         self.btnOpcion4.modificarColorLetra1(21, 67, 96)
         self.btnOpcion4.modificarColor2(209, 210, 179)
@@ -167,6 +188,15 @@ class Juego(object):
         self.btnInicio.modificarColor3(91, 202, 213)
         self.btnInicio.modificarColorLetra3(21, 67, 96)
         self.btnInicio.modificarEvento(6)
+
+        self.pregunta = Titulo("", 320, 60, 17, 3, (36, 32, 163))
+        self.pregunta1 = Titulo("", 320, 90, 17, 3, (36, 32, 163))
+        self.pregunta2 = Titulo("", 320, 120, 17, 3, (36, 32, 163))
+        self.pregunta3 = Titulo("", 320, 150, 17, 3, (36, 32, 163))
+        self.pregunta4 = Titulo("", 320, 180, 17, 3, (36, 32, 163))
+        self.pregunta5 = Titulo("", 320, 210, 17, 3, (36, 32, 163))
+        self.pregunta6 = Titulo("", 320, 240, 17, 3, (36, 32, 163))
+
 
         #Enviar al controlador
         self.controlador.enviarEventoBoton(self.btnOpcion1)
@@ -190,12 +220,13 @@ class Juego(object):
         self.btnInicio.modificarActivo(False)
 
     def reiniciar(self):
+        #self.seleccionar_pregunta()
         self.vida_actuales = 2
         self.puntuacion = 0
         self.dificultad = 1
 
-    def perder(self):
-        print("Perdiste wey!!, que malo eres")
+    def num_aleatorio(self, ini, fin):
+        return random.randint(ini,fin)
 
     def pintar(self,screen, tiempo):
         """
@@ -214,9 +245,18 @@ class Juego(object):
         self.cuadro_tiempo.pintar(screen)
         self.cuadro_Puntuacion.pintar(screen)
 
-        self.lblPuntuacion.pintar(screen)
+        self.tiempoJuego = tiempo
+        if (tiempo <= 3):
+            self.lblTiempo.modificarColor((148, 49, 38))
+        elif (tiempo <= 6):
+            self.lblTiempo.modificarColor((229, 175, 32))
+        else:
+            self.lblTiempo.modificarColor((91, 229, 69))
         self.lblTiempo.modificarTexto(str(tiempo))
         self.lblTiempo.pintar(screen)
+
+        self.lblPuntuacion.modificarTexto(str(self.puntuacion))
+        self.lblPuntuacion.pintar(screen)
 
         if (self.vida_actuales == 2):
             self.vida1.ponerImagen(screen)
@@ -231,11 +271,210 @@ class Juego(object):
             #GAME OVER
             pass
 
+        self.pregunta.pintar(screen)
+        self.pregunta1.pintar(screen)
+        self.pregunta2.pintar(screen)
+        self.pregunta3.pintar(screen)
+        self.pregunta4.pintar(screen)
+        self.pregunta5.pintar(screen)
+        self.pregunta6.pintar(screen)
+
         self.btnOpcion1.pintar(screen)
         self.btnOpcion2.pintar(screen)
         self.btnOpcion3.pintar(screen)
         self.btnOpcion4.pintar(screen)
         self.btnInicio.pintar(screen)
+
+    def seleccionar_pregunta(self):
+        self.pregunta.modificarTexto("")
+        self.pregunta1.modificarTexto("")
+        self.pregunta2.modificarTexto("")
+        self.pregunta3.modificarTexto("")
+        self.pregunta4.modificarTexto("")
+        self.pregunta5.modificarTexto("")
+        self.pregunta6.modificarTexto("")
+        self.btnOpcion1.modificarString("")
+        self.btnOpcion2.modificarString("")
+        self.btnOpcion3.modificarString("")
+        self.btnOpcion4.modificarString("")
+        tipo = self.num_aleatorio(1,2)
+        #decidira si es encriptar o desencriptar
+        #1 -> encriptar
+        #2 -> Desencriptar
+        if (tipo == 1):
+            tipo = self.num_aleatorio(0, len(self.palabras)-1)
+            (_,self.mensaje_desencriptado) = self.palabras[tipo]
+            tipo = self.num_aleatorio(1,4)
+            self.pregunta1.modificarTexto("La Palabra a Encriptar es:")
+            if (tipo == 1):
+                #Invertida
+                self.pregunta.modificarTexto(self.titulos["e_invertir"])
+                self.mensaje_encriptado = self.lista_to_str_espaciado(self.invetirOracion(self.mensaje_desencriptado))
+                self.pregunta2.modificarTexto(self.mensaje_desencriptado)
+                self.pregunta3.modificarTexto("Seleccione la encriptacion correcta")
+                tipo = self.num_aleatorio(1,4) #Pone el correcto
+                if (tipo == 1):
+                    self.btnOpcion1.modificarString(self.mensaje_encriptado)
+                    self.btnOpcion2.modificarString(self.lista_to_str_espaciado(self.invetirOracion(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])))
+                    self.btnOpcion3.modificarString(self.lista_to_str_espaciado(self.invetirOracion(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])))
+                    self.btnOpcion4.modificarString(self.lista_to_str_espaciado(self.invetirOracion(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])))
+                elif (tipo == 2):
+                    self.btnOpcion2.modificarString(self.mensaje_encriptado)
+                    self.btnOpcion1.modificarString(self.lista_to_str_espaciado(self.invetirOracion(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])))
+                    self.btnOpcion3.modificarString(self.lista_to_str_espaciado(self.invetirOracion(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])))
+                    self.btnOpcion4.modificarString(self.lista_to_str_espaciado(self.invetirOracion(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])))
+                elif (tipo == 3):
+                    self.btnOpcion3.modificarString(self.mensaje_encriptado)
+                    self.btnOpcion2.modificarString(self.lista_to_str_espaciado(self.invetirOracion(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])))
+                    self.btnOpcion1.modificarString(self.lista_to_str_espaciado(self.invetirOracion(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])))
+                    self.btnOpcion4.modificarString(self.lista_to_str_espaciado(self.invetirOracion(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])))
+                elif (tipo == 4):
+                    self.btnOpcion4.modificarString(self.mensaje_encriptado)
+                    self.btnOpcion2.modificarString(self.lista_to_str_espaciado(self.invetirOracion(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])))
+                    self.btnOpcion3.modificarString(self.lista_to_str_espaciado(self.invetirOracion(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])))
+                    self.btnOpcion1.modificarString(self.lista_to_str_espaciado(self.invetirOracion(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])))
+            elif (tipo == 2):
+                #encriptar ATBASH
+                self.pregunta.modificarTexto(self.titulos["e_atbash"])
+                self.mensaje_encriptado = self.encriptar_atbash(self.mensaje_desencriptado)
+                self.pregunta2.modificarTexto(self.mensaje_desencriptado)
+                self.pregunta4.modificarTexto(self.lista_to_str_espaciado(self.abecedario))
+                self.pregunta5.modificarTexto(self.lista_to_str_espaciado(reversed(self.abecedario)))
+                self.pregunta6.modificarTexto("Seleccione la encripcion Correcta")
+                tipo = self.num_aleatorio(1,4) #Pone el correcto
+                if (tipo == 1):
+                    self.btnOpcion1.modificarString(self.mensaje_encriptado)
+                    self.btnOpcion2.modificarString(self.encriptar_atbash(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                    self.btnOpcion3.modificarString(self.encriptar_atbash(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                    self.btnOpcion4.modificarString(self.encriptar_atbash(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                elif (tipo == 2):
+                    self.btnOpcion2.modificarString(self.mensaje_encriptado)
+                    self.btnOpcion1.modificarString(self.encriptar_atbash(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                    self.btnOpcion3.modificarString(self.encriptar_atbash(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                    self.btnOpcion4.modificarString(self.encriptar_atbash(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                elif (tipo == 3):
+                    self.btnOpcion3.modificarString(self.mensaje_encriptado)
+                    self.btnOpcion2.modificarString(self.encriptar_atbash(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                    self.btnOpcion1.modificarString(self.encriptar_atbash(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                    self.btnOpcion4.modificarString(self.encriptar_atbash(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                elif (tipo == 4):
+                    self.btnOpcion4.modificarString(self.mensaje_encriptado)
+                    self.btnOpcion2.modificarString(self.encriptar_atbash(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                    self.btnOpcion3.modificarString(self.encriptar_atbash(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                    self.btnOpcion1.modificarString(self.encriptar_atbash(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+            elif (tipo == 3):
+                #encriptar Polibi
+                self.pregunta.modificarTexto(self.titulos["e_polibi"])
+                self.mensaje_encriptado = self.encriptar_polibi_5(self.mensaje_desencriptado)
+                self.pregunta2.modificarTexto(self.mensaje_desencriptado)
+                self.pregunta5.modificarTexto("Seleccione la encripcion Correcta")
+                tipo = self.num_aleatorio(1,4) #Pone el correcto
+                if (tipo == 1):
+                    self.btnOpcion1.modificarString(self.mensaje_encriptado)
+                    self.btnOpcion2.modificarString(self.encriptar_polibi_5(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                    self.btnOpcion3.modificarString(self.encriptar_polibi_5(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                    self.btnOpcion4.modificarString(self.encriptar_polibi_5(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                elif (tipo == 2):
+                    self.btnOpcion2.modificarString(self.mensaje_encriptado)
+                    self.btnOpcion1.modificarString(self.encriptar_polibi_5(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                    self.btnOpcion3.modificarString(self.encriptar_polibi_5(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                    self.btnOpcion4.modificarString(self.encriptar_polibi_5(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                elif (tipo == 3):
+                    self.btnOpcion3.modificarString(self.mensaje_encriptado)
+                    self.btnOpcion2.modificarString(self.encriptar_polibi_5(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                    self.btnOpcion1.modificarString(self.encriptar_polibi_5(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                    self.btnOpcion4.modificarString(self.encriptar_polibi_5(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                elif (tipo == 4):
+                    self.btnOpcion4.modificarString(self.mensaje_encriptado)
+                    self.btnOpcion2.modificarString(self.encriptar_polibi_5(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                    self.btnOpcion3.modificarString(self.encriptar_polibi_5(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+                    self.btnOpcion1.modificarString(self.encriptar_polibi_5(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1]))
+            elif (tipo == 4):
+                #encriptar cesar
+                self.pregunta.modificarTexto(self.titulos["e_cesar"])
+                self.mensaje_encriptado = self.CodificarCesar(self.mensaje_desencriptado, 3)
+                self.pregunta2.modificarTexto(self.mensaje_desencriptado)
+                self.pregunta4.modificarTexto(self.lista_to_str_espaciado(self.abecedario))
+                self.pregunta5.modificarTexto(self.lista_to_str_espaciado(reversed(self.abecedario)))
+                self.pregunta6.modificarTexto("Seleccione la encripcion Correcta")
+                tipo = self.num_aleatorio(1,4) #Pone el correcto
+                if (tipo == 1):
+                    self.btnOpcion1.modificarString(self.mensaje_encriptado)
+                    self.btnOpcion2.modificarString(self.CodificarCesar(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1],3))
+                    self.btnOpcion3.modificarString(self.CodificarCesar(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1],3))
+                    self.btnOpcion4.modificarString(self.CodificarCesar(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1],3))
+                elif (tipo == 2):
+                    self.btnOpcion2.modificarString(self.mensaje_encriptado)
+                    self.btnOpcion1.modificarString(self.CodificarCesar(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1],3))
+                    self.btnOpcion3.modificarString(self.CodificarCesar(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1],3))
+                    self.btnOpcion4.modificarString(self.CodificarCesar(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1],3))
+                elif (tipo == 3):
+                    self.btnOpcion3.modificarString(self.mensaje_encriptado)
+                    self.btnOpcion2.modificarString(self.CodificarCesar(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1],3))
+                    self.btnOpcion1.modificarString(self.CodificarCesar(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1],3))
+                    self.btnOpcion4.modificarString(self.CodificarCesar(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1],3))
+                elif (tipo == 4):
+                    self.btnOpcion4.modificarString(self.mensaje_encriptado)
+                    self.btnOpcion2.modificarString(self.CodificarCesar(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1],3))
+                    self.btnOpcion3.modificarString(self.CodificarCesar(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1],3))
+                    self.btnOpcion1.modificarString(self.CodificarCesar(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1],3))
+
+        else:
+            tipo = self.num_aleatorio(0, len(self.palabras)-1)
+            (_,self.mensaje_desencriptado) = self.palabras[tipo]
+            tipo = self.num_aleatorio(1,4)
+            self.pregunta1.modificarTexto("La Palabra a Desencriptar es:")
+            if (tipo == 1):
+                #Invertida
+                self.pregunta.modificarTexto(self.titulos["d_invertir"])
+                self.mensaje_encriptado = self.lista_to_str_espaciado(self.invetirOracion(self.mensaje_desencriptado))
+                self.pregunta2.modificarTexto(self.mensaje_encriptado)
+                self.pregunta3.modificarTexto("Seleccione la Desencripcion correcta")
+            elif (tipo == 2):
+                #encriptar ATBASH
+                self.pregunta.modificarTexto(self.titulos["d_atbash"])
+                self.mensaje_encriptado = self.encriptar_atbash(self.mensaje_desencriptado)
+                self.pregunta2.modificarTexto(self.mensaje_encriptado)
+                self.pregunta4.modificarTexto(self.lista_to_str_espaciado(self.abecedario))
+                self.pregunta5.modificarTexto(self.lista_to_str_espaciado(reversed(self.abecedario)))
+                self.pregunta6.modificarTexto("Seleccione la encripcion Correcta")
+            elif (tipo == 3):
+                #encriptar Polibi
+                self.pregunta.modificarTexto(self.titulos["d_polibi"])
+                self.mensaje_encriptado = self.encriptar_polibi_5(self.mensaje_desencriptado)
+                self.pregunta2.modificarTexto(self.mensaje_encriptado)
+                self.pregunta5.modificarTexto("Seleccione la encripcion Correcta")
+            elif (tipo == 4):
+                #encriptar cesar
+                self.pregunta.modificarTexto(self.titulos["d_cesar"])
+                self.mensaje_encriptado = self.CodificarCesar(self.mensaje_desencriptado, 3)
+                self.pregunta2.modificarTexto(self.mensaje_encriptado)
+                self.pregunta4.modificarTexto(self.lista_to_str_espaciado(self.abecedario))
+                self.pregunta5.modificarTexto(self.lista_to_str_espaciado(reversed(self.abecedario)))
+                self.pregunta6.modificarTexto("Seleccione la encripcion Correcta")
+            tipo = self.num_aleatorio(1,4) #Pone el correcto
+            if (tipo == 1):
+                self.btnOpcion1.modificarString(self.mensaje_desencriptado)
+                self.btnOpcion2.modificarString(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])
+                self.btnOpcion3.modificarString(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])
+                self.btnOpcion4.modificarString(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])
+            elif (tipo == 2):
+                self.btnOpcion2.modificarString(self.mensaje_desencriptado)
+                self.btnOpcion1.modificarString(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])
+                self.btnOpcion3.modificarString(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])
+                self.btnOpcion4.modificarString(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])
+            elif (tipo == 3):
+                self.btnOpcion3.modificarString(self.mensaje_desencriptado)
+                self.btnOpcion2.modificarString(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])
+                self.btnOpcion1.modificarString(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])
+                self.btnOpcion4.modificarString(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])
+            elif (tipo == 4):
+                self.btnOpcion4.modificarString(self.mensaje_desencriptado)
+                self.btnOpcion2.modificarString(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])
+                self.btnOpcion3.modificarString(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])
+                self.btnOpcion1.modificarString(self.palabras[self.num_aleatorio(0,len(self.palabras)-1)][1])
+
+
 
     def modificar_tiempo(self, tiempo):
         self.tiempo = tiempo
@@ -245,6 +484,15 @@ class Juego(object):
 
     def get_vidas_actuales(self):
         return self.vida_actuales
+
+    def get_puntuacion(self):
+        return self.puntuacion
+
+    def compararOpcion(self, opcion):
+        return opcion == self.mensaje_encriptado or opcion == self.mensaje_desencriptado
+
+    def sumarPuntaje(self):
+        self.puntuacion += self.tiempoJuego
 
     def invertirPalabra(self, palabra):
         """

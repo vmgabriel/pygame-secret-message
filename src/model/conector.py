@@ -3,6 +3,7 @@
 
 #modulos
 import psycopg2, psycopg2.extras
+import sys
 
 """
 Conexion a Base de Datos
@@ -29,11 +30,13 @@ class Conexion:
         self.password = "admin"
         self.host = "localhost"
 
-    def enviar_registro(self, query):
+    def enviar_registro(self, query, iny):
         try:
             self.conector()
             cur = self.conn.cursor()
-            cur.execute(query)
+            cur.execute(query, iny)
+            self.conn.commit()
+            cur.close()
         except psycopg2.DatabaseError, e:
             if self.conn:
                 self.conn.rollback()
@@ -48,7 +51,9 @@ class Conexion:
             self.conector()
             cur = self.conn.cursor()
             cur.execute(query)
-            return cur.fetchall()
+            datos = cur.fetchall()
+            cur.close()
+            return datos
         except psycopg2.DatabaseError, e:
             if self.conn:
                 self.conn.rollback()

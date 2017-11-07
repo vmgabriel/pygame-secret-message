@@ -26,6 +26,7 @@ class eveFrmIni:
         self.eventoEjecutado = 0
         """Evento que puede enviarse a el formulario para saber en que estado esta"""
         self.tiempo = 0
+        self.opcion_escojida = ""
 
     def salir(self):
         """Metodo de salida del proceso"""
@@ -36,6 +37,12 @@ class eveFrmIni:
 
     def setTiempo(self, tiempo):
         self.tiempo = tiempo
+
+    def getOpcionEscojida(self):
+        return self.opcion_escojida
+
+    def setOpcionEscojida(self, opcion):
+        self.opcion_escojida = opcion
 
     def enviarEventoBoton(self, boton):
         """
@@ -54,6 +61,9 @@ class eveFrmIni:
         @rtype: int
         """
         return self.eventoEjecutado
+
+    def setEventoEjecutado(self,ee):
+        self.eventoEjecutado=ee
 
     def desactivarBotonesMenuPrincipal(self):
         """
@@ -171,18 +181,8 @@ class eveFrmIni:
                             self.eventoEjecutado += 1
                         if (self.eventoEjecutado == 16):
                             self.eventoEjecutado = 1
-                    if (x.geteventoActivo() == 8):
-                        #Oprimida opcion 1
-                        print("Oprimido Opcion1")
-                    if (x.geteventoActivo() == 9):
-                        #Oprimida opcion 2
-                        print("Oprimido Opcion2")
-                    if (x.geteventoActivo() == 10):
-                        #Oprimida opcion 3
-                        print("Oprimido Opcion3")
-                    if (x.geteventoActivo() == 11):
-                        #Oprimida opcion 4
-                        print("Oprimido Opcion4")
+                    if (x.geteventoActivo() == 8 or x.geteventoActivo() == 9 or x.geteventoActivo() == 10 or x.geteventoActivo() == 11):
+                        self.opcion_escojida = x.getString()
         if evento.type == pygame.MOUSEBUTTONUP:
             for x in self.botones:
                 if (x.estaEncima(evento.pos[0], evento.pos[1])):
