@@ -843,7 +843,6 @@ class frmIni:
                 over.pintar(self.screen)
 
                 if (over.getFinal()):
-                    print ("HELLO WWWWWWW")
                     self.etapa = 1
                     self.controlador.setEventoEjecutado(1)
                     over.reiniciar()
