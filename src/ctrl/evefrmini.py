@@ -25,20 +25,24 @@ class eveFrmIni:
         """Variable cargadora de algunos procesos"""
         self.eventoEjecutado = 0
         """Evento que puede enviarse a el formulario para saber en que estado esta"""
+        self.tiempo = 0
+        self.opcion_escojida = ""
 
     def salir(self):
         """Metodo de salida del proceso"""
         sys.exit(0)
 
-    # def getEventosPersonalizados(self,ev1,ev2):
-    #     """
-    #     Recibira los eventos personalizados para poder ser personalizados
-    #
-    #     @type ev1: Evento personalizado 1 entrada de imagen inicializada en la vista
-    #     @type ev2: Evento personalizado 2 salida de imagen inicializada en la vista
-    #     """
-    #     self.ev1=ev1
-    #     self.ev2=ev2
+    def getTiempo(self):
+        return self.tiempo
+
+    def setTiempo(self, tiempo):
+        self.tiempo = tiempo
+
+    def getOpcionEscojida(self):
+        return self.opcion_escojida
+
+    def setOpcionEscojida(self, opcion):
+        self.opcion_escojida = opcion
 
     def enviarEventoBoton(self, boton):
         """
@@ -57,6 +61,9 @@ class eveFrmIni:
         @rtype: int
         """
         return self.eventoEjecutado
+
+    def setEventoEjecutado(self,ee):
+        self.eventoEjecutado=ee
 
     def desactivarBotonesMenuPrincipal(self):
         """
@@ -126,7 +133,23 @@ class eveFrmIni:
         self.botones[11].modificarActivo(False)
         self.botones[12].modificarActivo(False)
 
-    def evePrincipal(self,evento):
+    def activarBotonesJuego(self):
+        """Activa el conjunto de botones del juego"""
+        self.botones[13].modificarActivo(True)
+        self.botones[14].modificarActivo(True)
+        self.botones[15].modificarActivo(True)
+        self.botones[16].modificarActivo(True)
+        self.botones[17].modificarActivo(True)
+
+    def desactivarBotonesJuego(self):
+        """Desactiva el conjunto de botones del juego"""
+        self.botones[13].modificarActivo(False)
+        self.botones[14].modificarActivo(False)
+        self.botones[15].modificarActivo(False)
+        self.botones[16].modificarActivo(False)
+        self.botones[17].modificarActivo(False)
+
+    def evePrincipal(self,evento,TIEMPO):
         """
         Metodo que gestionara todos los procesos del juego
 
@@ -158,6 +181,8 @@ class eveFrmIni:
                             self.eventoEjecutado += 1
                         if (self.eventoEjecutado == 16):
                             self.eventoEjecutado = 1
+                    if (x.geteventoActivo() == 8 or x.geteventoActivo() == 9 or x.geteventoActivo() == 10 or x.geteventoActivo() == 11):
+                        self.opcion_escojida = x.getString()
         if evento.type == pygame.MOUSEBUTTONUP:
             for x in self.botones:
                 if (x.estaEncima(evento.pos[0], evento.pos[1])):
@@ -167,9 +192,12 @@ class eveFrmIni:
                 self.desactivarBotonesMenuSalida()
                 self.desactivarBotonesPuntuacion()
                 self.desactivarBotonesTutorial()
+                self.desactivarBotonesJuego()
         if evento.type == pygame.MOUSEMOTION:
             for x in self.botones:
                 if (x.estaEncima(evento.pos[0], evento.pos[1])):
                     x.modificarEstadoBoton(2)
                 else:
                     x.modificarEstadoBoton(1)
+        if evento.type == TIEMPO:
+            self.tiempo-=1

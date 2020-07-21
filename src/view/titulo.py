@@ -87,3 +87,13 @@ class Titulo(object):
         """
         self.texto = texto
         self.cargar()
+
+    def modificarColor(self, color):
+        """
+        Modifica el color
+
+        @param color: Color RSA
+        @type color: (R, S, A)
+        """
+        self.color = color
+        self.cargar()

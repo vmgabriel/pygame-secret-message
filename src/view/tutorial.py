@@ -11,7 +11,7 @@ from imagenes import Imagen
 from titulo import Titulo
 
 """
-Formulario que cargara, primera ventana
+Formulario que cargue la seccion del tutorial
 
 @author: Dalia Muñoz - Gabriel Vargas
 @version: 0.1
